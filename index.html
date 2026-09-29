@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>810 PIMVILLE FC - OFFICIAL</title>
+<title>810 PIMVILLE FC - Tournaments</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Arial;background:#0a3d0a;color:white}
@@ -10,11 +10,11 @@ h1{color:#FFD700;font-size:32px;margin:12px 0 5px}
 .motto{color:#aaffaa;letter-spacing:3px;font-weight:bold}
 .card{background:white;color:#0a3d0a;border-radius:12px;padding:20px;margin:20px auto;max-width:900px}
 .fixture{border-left:5px solid #FFD700;padding-left:12px;margin:12px 0}
+.tourney{background:#fff8dc;border:2px solid #FFD700}
 .btn{background:#FFD700;color:#0a3d0a;padding:12px 22px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;display:inline-block;text-decoration:none;margin:5px}
 .btn-dark{background:#0a3d0a;color:#FFD700}
 .contact{background:#0a3d0a;color:white;border:2px solid #FFD700}
-.contact a{color:#FFD700;font-weight:bold;text-decoration:underline}
-.contact a:hover{color:white;background:#FFD700;color:#0a3d0a;padding:2px 4px}
+.contact a{color:#FFD700;font-weight:bold}
 .admin{display:none;background:#111;padding:15px;border:2px dashed #FFD700;border-radius:10px;margin-top:15px}
 input{padding:10px;width:100%;margin:5px 0;border-radius:5px;border:1px solid #ccc}
 </style>
@@ -23,7 +23,7 @@ input{padding:10px;width:100%;margin:5px 0;border-radius:5px;border:1px solid #c
 <header>
 <img src="logo.png" class="logo" onerror="this.src='https://via.placeholder.com/170x170?text=810+FC'">
 <h1>⚽ 810 PIMVILLE FC ⚽</h1>
-<p class="motto">Official 810 Pimville FC Page - Soweto</p>
+<p class="motto">Official Tournaments & Team Page - Soweto</p>
 </header>
 
 <div class="card">
@@ -34,22 +34,27 @@ input{padding:10px;width:100%;margin:5px 0;border-radius:5px;border:1px solid #c
 </div>
 </div>
 
-<div class="card contact">
-<h2>📞 Contact Us - Click to Connect</h2>
-<p>✅ WhatsApp: <a href="https://wa.me/27658936517" target="_blank">+27 65 893 6517 - CLICK HERE TO CHAT</a></p>
-<p>✅ YouTube: <a href="https://www.youtube.com/@810Pimville" target="_blank">@810Pimville - CLICK TO WATCH</a></p>
-<p>✅ Facebook: <a href="https://www.facebook.com/share/16sX1dJb4n/" target="_blank">810 Pimville FC - CLICK TO FOLLOW</a></p>
-<p>✅ Email: <a href="mailto:810pimvillefc@gmail.com">810pimvillefc@gmail.com - CLICK TO EMAIL</a></p>
+<div class="card tourney">
+<h2>🏆 Tournaments Hosted by 810 Pimville FC</h2>
+<p>📌 <strong>Pimville Youth Cup - Dec 2025</strong> - 16 Teams</p>
+<p>📌 <strong>810 Top 8 - Coming Soon</strong> - 8 Teams - R5000 Prize</p>
+<p>📌 <strong>Soweto Derby Week</strong> - 810 Pimville vs All</p>
 <br>
-<a class="btn" href="https://wa.me/27658936517" target="_blank">WhatsApp Us</a>
-<a class="btn btn-dark" href="https://www.youtube.com/@810Pimville" target="_blank">YouTube</a>
-<a class="btn" style="background:#1877F2;color:white" href="https://www.facebook.com/share/16sX1dJb4n/" target="_blank">Facebook</a>
+<p>Want to enter your team? WhatsApp us!</p>
+<a class="btn btn-dark" href="https://wa.me/27658936517" target="_blank">Enter Tournament</a>
+</div>
+
+<div class="card contact">
+<h2>📞 Contact - Click to Connect</h2>
+<p>✅ WhatsApp: <a href="https://wa.me/27658936517" target="_blank">+27 65 893 6517</a></p>
+<p>✅ YouTube: <a href="https://www.youtube.com/@810Pimville" target="_blank">@810Pimville</a></p>
+<p>✅ Facebook: <a href="https://www.facebook.com/share/16sX1dJb4n/" target="_blank">810 Pimville FC</a></p>
+<p>✅ Email: <a href="mailto:810pimvillefc@gmail.com">810pimvillefc@gmail.com</a></p>
 </div>
 
 <div class="card">
-<button class="btn btn-dark" onclick="document.getElementById('admin').style.display='block'">🔐 Admin Login</button>
+<button class="btn btn-dark" onclick="document.getElementById('admin').style.display='block'">🔐 Admin - Update Score</button>
 <div id="admin" class="admin">
-<h3>Admin - Update Score</h3>
 <input id="inTeamA" placeholder="Team A">
 <input id="inScoreA" placeholder="Score A" type="number">
 <input id="inTeamB" placeholder="Team B">
@@ -68,7 +73,7 @@ if(a) document.getElementById('teamA').innerText=a;
 if(sa) document.getElementById('scoreA').innerText=sa;
 if(b) document.getElementById('teamB').innerText=b;
 if(sb) document.getElementById('scoreB').innerText=sb;
-alert('Score Updated! - But will reset on refresh. Module 2 will save permanently!');
+alert('Score Updated!');
 }
 </script>
 </body>
