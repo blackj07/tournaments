@@ -54,7 +54,33 @@ input{padding:10px;width:100%;margin:5px 0;border-radius:5px;border:1px solid #c
 
 <div class="card">
 <button class="btn btn-dark" onclick="document.getElementById('admin').style.display='block'">🔐 Admin - Update Score</button>
-<div id="admin" class="admin">
+<!-- TEAM REGISTRATION -->
+<section id="register" style="background:#111; padding:30px 20px; text-align:center; border-top:3px solid #FFD700;">
+  <h2 style="color:#FFD700;">⚽ Register Team</h2>
+  <form id="regForm" style="max-width:400px; margin:auto; text-align:left;">
+    <input type="text" id="regTeam" placeholder="Team Name" required style="width:100%; padding:12px; margin:6px 0;">
+    <input type="text" id="regCoach" placeholder="Coach Name" required style="width:100%; padding:12px; margin:6px 0;">
+    <input type="text" id="regPhone" placeholder="WhatsApp 07..." required style="width:100%; padding:12px; margin:6px 0;">
+    <select id="regTour" style="width:100%; padding:12px; margin:6px 0;">
+      <option>Pimville Youth Cup</option>
+      <option>810 Top 8</option>
+      <option>Soweto Derby Week</option>
+    </select>
+    <button class="btn" type="submit" style="width:100%; background:#FFD700; color:#000; padding:14px; font-weight:bold; margin-top:10px;">REGISTER - MAKULA KONDZO!</button>
+  </form>
+</section>
+
+<script>
+document.getElementById('regForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  let t=document.getElementById('regTeam').value;
+  let c=document.getElementById('regCoach').value;
+  let p=document.getElementById('regPhone').value;
+  let tour=document.getElementById('regTour').value;
+  let msg=⚽ NEW REGISTRATION - 810 PIMVILLE FC%0A%0ATeam: ${t}%0ACoach: ${c}%0APhone: ${p}%0ATournament: ${tour};
+  window.open(https://wa.me/27672607069?text=${msg},'_blank');
+});
+</script>div id="admin" class="admin">
 <input id="inTeamA" placeholder="Team A">
 <input id="inScoreA" placeholder="Score A" type="number">
 <input id="inTeamB" placeholder="Team B">
