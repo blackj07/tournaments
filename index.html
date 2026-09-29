@@ -13,14 +13,14 @@ button{cursor:pointer} input,select{padding:10px;margin:5px 0;width:100%;border:
 <h2>🛡️ OFFICIAL SQUAD</h2>
 <div style="background:#fef9c3;padding:10px;border-radius:8px;display:flex;gap:5px">
 <input type="text" id="pass" placeholder="Chairman Password" style="width:70%">
-<button onclick="login()" style="width:30%;background:#facc15;border:none;border-radius:6px;font-weight:900;padding:12px">Login</button>
+<button onclick="doLogin()" style="width:30%;background:#facc15;border:none;border-radius:6px;font-weight:900;padding:12px">Login</button>
 </div>
 <p id="status" style="text-align:center;color:red;margin-top:8px"></p>
 <div id="addForm">
 <input id="pName" placeholder="Player Name">
 <input id="pNum" type="number" placeholder="Number">
 <select id="pPos"><option value="">Position</option><option>Goalkeeper</option><option>Defender</option><option>Midfielder</option><option>Striker</option></select>
-<button onclick="addP()" style="background:#15803d;color:white;border:none;padding:12px;border-radius:6px;width:100%;font-weight:bold;margin-top:5px">Add Player</button>
+<button onclick="doLogin()" style="background:#15803d;color:white;border:none;padding:12px;border-radius:6px;width:100%;font-weight:bold;margin-top:5px">Add Player</button>
 </div>
 <div id="list" style="margin-top:10px"><p style="text-align:center;color:#666">No players yet. Login to add.</p></div>
 </div>
