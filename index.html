@@ -1,4 +1,4 @@
-[9/29/2026 12:07 PM] blackj pips: <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -32,7 +32,10 @@ footer{text-align:center;padding:20px;background:#000;color:#facc15;margin-top:2
 <div class="container">
 <div class="card">
 <h2>🛡️ OFFICIAL SQUAD - CHAIRMAN MANAGED</h2>
-<button id="loginBtn" onclick="chairmanLogin()">🔐 Chairman Login to Add Players</button>
+<div style="background:#fef9c3;padding:10px;border-radius:8px;">
+<input type="password" id="chairmanPass" placeholder="Enter Chairman Password" style="width:65%;padding:12px;border:2px solid #15803d;border-radius:6px;">
+<button id="loginBtn" onclick="chairmanLogin()" style="width:30%;padding:12px;background:#facc15;border:none;border-radius:6px;font-weight:900;">Login</button>
+</div>
 <div id="addPlayerForm">
 <input type="text" id="playerName" placeholder="Player Name e.g. Thabo">
 <input type="number" id="playerNumber" placeholder="Shirt Number e.g. 10">
@@ -60,18 +63,20 @@ footer{text-align:center;padding:20px;background:#000;color:#facc15;margin-top:2
 const chairmanPassword = "810Pimville2025";
 let isChairmanLoggedIn = false;
 function chairmanLogin() {
-  const pass = prompt("Chairman, enter password:");
+  const pass = document.getElementById('chairmanPass').value;
   if (pass === chairmanPassword) {
     isChairmanLoggedIn = true;
     alert("Welcome Chairman! Makula Kondzo!");
     document.getElementById('addPlayerForm').style.display = 'block';
-    document.getElementById('loginBtn').innerText = '✅ Chairman Logged In';
+    document.getElementById('loginBtn').innerText = '✅ OK';
     document.getElementById('loginBtn').style.background = '#15803d';
     document.getElementById('loginBtn').style.color = 'white';
     let list = document.getElementById('squadList');
     if(list.innerHTML.includes('No players')) list.innerHTML = '';
-  } else if (pass !== null) {
-    alert("Wrong password!");
+  } else {
+    alert("Wrong password! Use 810Pimville2025");
+  }
+}
   }
 }
 function addPlayer(e) {
