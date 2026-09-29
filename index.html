@@ -1,67 +1,95 @@
- <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+[9/29/2026 12:07 PM] blackj pips: <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>810 FC PIMVILLE - OFFICIAL</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial;background:#0a3d0a;color:white}
-header{background:#0a3d0a;padding:25px;text-align:center;border-bottom:4px solid #FFD700}
-.logo{width:170px;height:170px;border-radius:50%;border:4px solid #FFD700;background:white}
-h1{color:#FFD700;font-size:32px;margin:12px 0 5px}
-.motto{color:#aaffaa;letter-spacing:3px;font-weight:bold}
-.card{background:white;color:#0a3d0a;border-radius:12px;padding:20px;margin:20px auto;max-width:900px}
-.fixture{border-left:5px solid #FFD700;padding-left:12px;margin:12px 0}
-.btn{background:#FFD700;color:#0a3d0a;padding:12px 22px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;display:inline-block;text-decoration:none;margin:5px}
-.btn-dark{background:#0a3d0a;color:#FFD700}
-.contact{background:#0a3d0a;color:white;border:2px solid #FFD700}
-.contact a{color:#FFD700;font-weight:bold;text-decoration:none}
-.admin{display:none;background:#111;padding:15px;border:2px dashed #FFD700;border-radius:10px;margin-top:15px}
-.player{background:linear-gradient(135deg,#FFD700,#ffed4e);padding:10px;border-radius:8px;margin:5px 0;font-weight:bold;color:#0a3d0a}
-footer{background:#052805;padding:20px;text-align:center;border-top:3px solid #FFD700}
-</style></head><body>
-
+body{font-family:Arial;background:#0a2e0a;color:white}
+header{background:linear-gradient(to bottom,#facc15,#15803d);padding:20px;text-align:center;border-bottom:4px solid #facc15}
+.logo{width:90px;height:90px;background:white;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;overflow:hidden;border:3px solid #0a2e0a}
+.logo img{width:100%;height:100%;object-fit:cover}
+h1{color:#0a2e0a;font-size:32px;font-weight:900}
+.container{max-width:900px;margin:20px auto;padding:0 15px}
+.card{background:white;color:#0a2e0a;border-radius:12px;padding:20px;margin-bottom:20px;border-left:6px solid #facc15}
+#loginBtn{background:#facc15;color:#0a2e0a;padding:12px 22px;border:none;border-radius:8px;font-weight:900;cursor:pointer;width:100%;font-size:16px}
+#addPlayerForm{display:none;background:#f0fdf4;padding:15px;border-radius:10px;border:2px dashed #15803d;margin-top:10px}
+#addPlayerForm input,#addPlayerForm select{width:100%;padding:10px;margin:6px 0;border:2px solid #15803d;border-radius:6px}
+#addPlayerForm button{background:#15803d;color:white;padding:12px;width:100%;border:none;border-radius:8px;font-weight:bold;margin-top:10px}
+.player-item{padding:12px;border-bottom:1px solid #ddd;display:flex;justify-content:space-between}
+.contact-box{background:linear-gradient(to bottom,#0f172a,#14532d);border:2px solid #facc15;border-radius:12px;padding:20px}
+.contact-box a{color:#facc15;font-weight:bold;text-decoration:none}
+footer{text-align:center;padding:20px;background:#000;color:#facc15;margin-top:20px;border-top:3px solid #facc15}
+</style>
+</head>
+<body>
 <header>
-<img src="logo.png" class="logo" onerror="this.src='photo_2026-09_29_11-13-29.jpg'" alt="810 FC">
+<div class="logo"><img src="logo.png" alt="810"></div>
 <h1>810 FC PIMVILLE</h1>
-<div class="motto">MAKULA KONDZO • EST. 2025</div>
+<div style="color:#0a2e0a;font-weight:bold;letter-spacing:3px;">MAKULA KONDZO • EST. 2025</div>
 </header>
-
-<div style="padding:15px">
+<div class="container">
 <div class="card">
-<h3>⚽ OFFICIAL SQUAD - CHAIRMAN MANAGED</h3>
-<p style="font-size:12px;color:#666">No public registration. Only Chairman can add.</p>
-<div id="squad"></div>
-<div style="text-align:center;margin-top:15px">
-<button onclick="login()" class="btn btn-dark">🔒 CHAIRMAN LOGIN TO ADD PLAYERS</button>
+<h2>🛡️ OFFICIAL SQUAD - CHAIRMAN MANAGED</h2>
+<button id="loginBtn" onclick="chairmanLogin()">🔐 Chairman Login to Add Players</button>
+<div id="addPlayerForm">
+<input type="text" id="playerName" placeholder="Player Name e.g. Thabo">
+<input type="number" id="playerNumber" placeholder="Shirt Number e.g. 10">
+<select id="playerPosition"><option value="">Select Position</option><option>Goalkeeper</option><option>Defender</option><option>Midfielder</option><option>Striker</option><option>Winger</option></select>
+<button onclick="addPlayer(event)">Add Player to Squad</button>
 </div>
-<div id="admin" class="admin">
-<input id="pName" placeholder="Full Name" style="width:100%;padding:10px;margin:5px 0">
-<input id="pPos" placeholder="Position" style="width:100%;padding:10px;margin:5px 0">
-<button onclick="addP()" class="btn" style="width:100%">ADD PLAYER</button>
+<div id="squadList" style="margin-top:15px;"><p style="text-align:center;color:#666;">No players yet. Chairman, login to add squad.</p></div>
 </div>
-</div>
-
 <div class="card">
-<h3>📅 FIXTURES</h3>
-<div class="fixture"><strong>Sat 04 Oct • 15:00</strong><br>810 FC vs Pimville United<br><small>📍 Pimville Grounds</small></div>
-<div class="fixture"><strong>Sat 11 Oct • 13:00</strong><br>Soweto Stars vs 810 FC<br><small>📍 Dobsonville</small></div>
+<h2>📅 FIXTURES</h2>
+<div style="border-left:4px solid #facc15;padding-left:10px;margin-bottom:15px;"><b>Sat 04 Oct • 15:00</b><br>810 FC vs Pimville United<br>📍 Pimville Grounds</div>
+<div style="border-left:4px solid #facc15;padding-left:10px;"><b>Sat 11 Oct • 13:00</b><br>Soweto Stars vs 810 FC<br>📍 Dobsonville</div>
 </div>
-
-<div class="card contact">
-<h3 style="color:#FFD700">📞 CONTACT 810 FC PIMVILLE</h3><br>
-<p>📱 Phone/WhatsApp: <a href="tel:0658936517">065 893 6517</a> - <a href="https://wa.me/27658936517" style="background:#25D366;color:white;padding:5px 10px;border-radius:15px">WhatsApp</a></p><br>
+<div class="contact-box">
+<h3 style="color:#facc15;">📞 CONTACT 810 FC PIMVILLE</h3>
+<p>📱 Phone/WhatsApp: <a href="https://wa.me/27658936517">065 893 6517</a></p><br>
 <p>📧 Email: <a href="mailto:810pimvillefc@gmail.com">810pimvillefc@gmail.com</a></p><br>
 <p>🔵 Facebook: <a href="https://facebook.com/810Pimvillefc" target="_blank">810Pimville fc</a></p><br>
-<p>🔴 YouTube: <a href="https://youtube.com/@810Pimville" target="_blank">@810Pimville</a></p><br>
-<div style="background:rgba(255,215,0,0.15);padding:10px;border-radius:8px;text-align:center">To join: WhatsApp Chairman on 065 893 6517 with Name, Age, Position. Verified Pimville players only.</div>
+<p>🔴 YouTube: <a href="https://www.youtube.com/@810Pimville" target="_blank">@810Pimville</a></p><br>
+<div style="background:rgba(250,204,21,0.15);padding:10px;border-radius:8px;text-align:center;margin-top:10px;">To join: WhatsApp Chairman on 065 893 6517 with Name, Age, Position.</div>
+[9/29/2026 12:07 PM] blackj pips: </div>
 </div>
-</div>
-
-<footer><strong>© 2025 810 PIMVILLE FC • MAKULA KONDZO</strong><br>Pimville, Soweto • Chairman Secured</footer>
-
+<footer>© 2025 810 PIMVILLE FC • MAKULA KONDZO<br>Pimville, Soweto</footer>
 <script>
-let squad=JSON.parse(localStorage.getItem('810s')||'[]');
-function render(){document.getElementById('squad').innerHTML=squad.length?squad.map(p=>'<div class=player>'+p.name+' - '+p.pos+'</div>').join(''):'<i>No players yet</i>';}
-function login(){let p=prompt('Chairman Password:');if(p==='810Pimville2025'p==='810'p==='chairman'){document.getElementById('admin').style.display='block';}else{alert('Wrong password. Call Chairman 0658936517');}}
-[9/29/2026 11:27 AM] blackj pips: function addP(){let n=document.getElementById('pName').value.trim();let pos=document.getElementById('pPos').value.trim()||'Player';if(!n)return; squad.push({name:n,pos:pos});localStorage.setItem('810s',JSON.stringify(squad));render();document.getElementById('pName').value='';document.getElementById('pPos').value='';alert(n+' added!');}
-render();
-</script></body></html>
+const chairmanPassword = "810Pimville2025";
+let isChairmanLoggedIn = false;
+function chairmanLogin() {
+  const pass = prompt("Chairman, enter password:");
+  if (pass === chairmanPassword) {
+    isChairmanLoggedIn = true;
+    alert("Welcome Chairman! Makula Kondzo!");
+    document.getElementById('addPlayerForm').style.display = 'block';
+    document.getElementById('loginBtn').innerText = '✅ Chairman Logged In';
+    document.getElementById('loginBtn').style.background = '#15803d';
+    document.getElementById('loginBtn').style.color = 'white';
+    let list = document.getElementById('squadList');
+    if(list.innerHTML.includes('No players')) list.innerHTML = '';
+  } else if (pass !== null) {
+    alert("Wrong password!");
+  }
+}
+function addPlayer(e) {
+  e.preventDefault();
+  if (!isChairmanLoggedIn) { alert("Login first!"); return; }
+  const name = document.getElementById('playerName').value.trim();
+  const num = document.getElementById('playerNumber').value.trim();
+  const pos = document.getElementById('playerPosition').value;
+  if (!name  !num  !pos) { alert("Fill all fields!"); return; }
+  const squadList = document.getElementById('squadList');
+  const div = document.createElement('div');
+  div.className = 'player-item';
+  div.innerHTML = <span><b>#${num} - ${name}</b> - ${pos}</span> <button onclick="this.parentElement.remove()" style="background:red;color:white;border:none;padding:5px 10px;border-radius:5px;">Remove</button>;
+  squadList.appendChild(div);
+  document.getElementById('playerName').value = '';
+  document.getElementById('playerNumber').value = '';
+  document.getElementById('playerPosition').value = '';
+}
+</script>
+</body>
+</html>
