@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>810 FC PIMVILLE - OFFICIAL</title>
+<title>810 PIMVILLE FC - OFFICIAL</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Arial;background:#0a3d0a;color:white}
 header{background:#0a3d0a;padding:25px;text-align:center;border-bottom:4px solid #FFD700}
-.logo{width:170px;height:170px;border-radius:50%;border:4px solid #FFD700;background:white}
+.logo{width:170px;height:170px;border-radius:50%;border:4px solid #FFD700;background:white;object-fit:cover}
 h1{color:#FFD700;font-size:32px;margin:12px 0 5px}
 .motto{color:#aaffaa;letter-spacing:3px;font-weight:bold}
 .card{background:white;color:#0a3d0a;border-radius:12px;padding:20px;margin:20px auto;max-width:900px}
@@ -13,55 +13,63 @@ h1{color:#FFD700;font-size:32px;margin:12px 0 5px}
 .btn{background:#FFD700;color:#0a3d0a;padding:12px 22px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;display:inline-block;text-decoration:none;margin:5px}
 .btn-dark{background:#0a3d0a;color:#FFD700}
 .contact{background:#0a3d0a;color:white;border:2px solid #FFD700}
-.contact a{color:#FFD700;font-weight:bold;text-decoration:none}
+.contact a{color:#FFD700;font-weight:bold;text-decoration:underline}
+.contact a:hover{color:white;background:#FFD700;color:#0a3d0a;padding:2px 4px}
 .admin{display:none;background:#111;padding:15px;border:2px dashed #FFD700;border-radius:10px;margin-top:15px}
-.player{background:linear-gradient(135deg,#FFD700,#ffed4e);padding:10px;border-radius:8px;margin:5px 0;font-weight:bold;color:#0a3d0a}
-footer{background:#052805;padding:20px;text-align:center;border-top:3px solid #FFD700}
-</style></head><body>
-
+input{padding:10px;width:100%;margin:5px 0;border-radius:5px;border:1px solid #ccc}
+</style>
+</head>
+<body>
 <header>
-<img src="logo.png" class="logo" onerror="this.src='logo.png'" alt="810Pimville FC">
-<h1>810Pimville fc</h1>
-<div class="motto">MAKULA KONDZO • EST. 2025</div>
+<img src="logo.png" class="logo" onerror="this.src='https://via.placeholder.com/170x170?text=810+FC'">
+<h1>⚽ 810 PIMVILLE FC ⚽</h1>
+<p class="motto">Official 810 Pimville FC Page - Soweto</p>
 </header>
 
-<div style="padding:15px">
 <div class="card">
-<h3>⚽ OFFICIAL SQUAD - CHAIRMAN MANAGED</h3>
-<p style="font-size:12px;color:#666">No public registration. Only Chairman can add.</p>
-<div id="squad"></div>
-<div style="text-align:center;margin-top:15px">
-<button onclick="login()" class="btn btn-dark">🔒 CHAIRMAN LOGIN TO ADD PLAYERS</button>
+<h2>🔥 Today's Fixture</h2>
+<div class="fixture">
+<p><strong id="teamA">810 Pimville FC</strong> <span id="scoreA">2</span> - <span id="scoreB">1</span> <strong id="teamB">Soweto Stars</strong></p>
+<p>🏟️ Pimville Grounds | ⏰ 15:00</p>
 </div>
-<div id="admin" class="admin">
-<input id="pName" placeholder="Full Name" style="width:100%;padding:10px;margin:5px 0">
-<input id="pPos" placeholder="Position" style="width:100%;padding:10px;margin:5px 0">
-<button onclick="addP()" class="btn" style="width:100%">ADD PLAYER</button>
-</div>
-</div>
-
-<div class="card">
-<h3>📅 FIXTURES</h3>
-<div class="fixture"><strong>Sat 04 Oct • 15:00</strong><br>810 FC vs Pimville United<br><small>📍 Pimville Grounds</small></div>
-<div class="fixture"><strong>Sat 11 Oct • 13:00</strong><br>Soweto Stars vs 810 FC<br><small>📍 Dobsonville</small></div>
 </div>
 
 <div class="card contact">
-<h3 style="color:#FFD700">📞 CONTACT 810 FC PIMVILLE</h3><br>
-<p>📱 Phone/WhatsApp: <a href="tel:0658936517">065 893 6517</a> - <a href="https://wa.me/27658936517" style="background:#25D366;color:white;padding:5px 10px;border-radius:15px">WhatsApp</a></p><br>
-<p>📧 Email: <a href="mailto:810pimvillefc@gmail.com">810pimvillefc@gmail.com</a></p><br>
-<p>🔵 Facebook: <a href="https://facebook.com/810Pimvillefc" target="_blank">810Pimville fc</a></p><br>
-<p>🔴 YouTube: <a href="https://youtube.com/@810Pimville" target="_blank">@810Pimville</a></p><br>
-<div style="background:rgba(255,215,0,0.15);padding:10px;border-radius:8px;text-align:center">To join: WhatsApp Chairman on 065 893 6517 with Name, Age, Position. Verified Pimville players only.</div>
-</div>
+<h2>📞 Contact Us - Click to Connect</h2>
+<p>✅ WhatsApp: <a href="https://wa.me/27658936517" target="_blank">+27 65 893 6517 - CLICK HERE TO CHAT</a></p>
+<p>✅ YouTube: <a href="https://www.youtube.com/@810Pimville" target="_blank">@810Pimville - CLICK TO WATCH</a></p>
+<p>✅ Facebook: <a href="https://www.facebook.com/share/16sX1dJb4n/" target="_blank">810 Pimville FC - CLICK TO FOLLOW</a></p>
+<p>✅ Email: <a href="mailto:810pimvillefc@gmail.com">810pimvillefc@gmail.com - CLICK TO EMAIL</a></p>
+<br>
+<a class="btn" href="https://wa.me/27658936517" target="_blank">WhatsApp Us</a>
+<a class="btn btn-dark" href="https://www.youtube.com/@810Pimville" target="_blank">YouTube</a>
+<a class="btn" style="background:#1877F2;color:white" href="https://www.facebook.com/share/16sX1dJb4n/" target="_blank">Facebook</a>
 </div>
 
-<footer><strong>© 2025 810 PIMVILLE FC • MAKULA KONDZO</strong><br>Pimville, Soweto • Chairman Secured</footer>
+<div class="card">
+<button class="btn btn-dark" onclick="document.getElementById('admin').style.display='block'">🔐 Admin Login</button>
+<div id="admin" class="admin">
+<h3>Admin - Update Score</h3>
+<input id="inTeamA" placeholder="Team A">
+<input id="inScoreA" placeholder="Score A" type="number">
+<input id="inTeamB" placeholder="Team B">
+<input id="inScoreB" placeholder="Score B" type="number">
+<button class="btn" onclick="updateScore()">Save Score</button>
+</div>
+</div>
 
 <script>
-let squad=JSON.parse(localStorage.getItem('810s')||'[]');
-function render(){document.getElementById('squad').innerHTML=squad.length?squad.map(p=>'<div class=player>'+p.name+' - '+p.pos+'</div>').join(''):'<i>No players yet</i>';}
-function login(){let p=prompt('Chairman Password:');if(p==='810Pimville2025'p==='810'p==='chairman'){document.getElementById('admin').style.display='block';}else{alert('Wrong password. Call Chairman 0658936517');}}
-  function addP(){let n=document.getElementById('pName').value.trim();let pos=document.getElementById('pPos').value.trim()||'Player';if(!n)return; squad.push({name:n,pos:pos});localStorage.setItem('810s',JSON.stringify(squad));render();document.getElementById('pName').value='';document.getElementById('pPos').value='';alert(n+' added!');}
-render();
-</script></body></html>
+function updateScore(){
+let a=document.getElementById('inTeamA').value;
+let sa=document.getElementById('inScoreA').value;
+let b=document.getElementById('inTeamB').value;
+let sb=document.getElementById('inScoreB').value;
+if(a) document.getElementById('teamA').innerText=a;
+if(sa) document.getElementById('scoreA').innerText=sa;
+if(b) document.getElementById('teamB').innerText=b;
+if(sb) document.getElementById('scoreB').innerText=sb;
+alert('Score Updated! - But will reset on refresh. Module 2 will save permanently!');
+}
+</script>
+</body>
+</html>
