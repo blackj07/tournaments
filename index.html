@@ -1,23 +1,85 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    
-    </head>
-    <body>
-        <h1>Home page</h1>
-        <h2>This is a heading</h2>
-         <h3>This is a heading</h3>
-         <h4>This is a heading</h4>
-         <h5>This is a heading</h5>
-         <h6>This is a heading</h6>
-        <p>Hello everyone</p>
-        <p>Hi love</p>
-        <a href="boat.html"><img src="images/21.PNG" height="150"/></a>
-        <img src="images/21.PNG" height="180" />
-        
-        
-        <a href="http://www.google.com">Click here to go to Google</a>
-        <a href="about.html">Click here to go to about us</a>
-    
-    </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>810 FC PIMVILLE - Official</title>
+<style>
+body{font-family:Arial, sans-serif;background:#000;color:#fff;margin:0;padding:0}
+header{background:gold;color:#000;padding:20px;text-align:center;font-weight:bold;font-size:24px}
+section{background:#111;border:2px solid gold;margin:15px;padding:15px;border-radius:10px}
+input,select{width:100%;padding:12px;margin:6px 0;border-radius:5px;border:none;box-sizing:border-box;font-size:16px}
+button{background:gold;color:#000;padding:14px;width:100%;border:none;font-weight:bold;border-radius:5px;margin-top:8px;cursor:pointer;font-size:16px}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{border:1px solid gold;padding:10px;text-align:left}
+footer{text-align:center;padding:20px;color:gold;font-size:12px}
+h2{color:gold}
+</style>
+</head>
+<body>
+<header>⚽ 810 FC PIMVILLE - OFFICIAL</header>
+
+<section>
+<h2>📝 JOIN 810 FC - Registration</h2>
+<input id="pName" placeholder="Full Name">
+<input id="pPhone" placeholder="Phone Number">
+<select id="pPos"><option>Striker</option><option>Midfielder</option><option>Defender</option><option>Goalkeeper</option></select>
+<button onclick="register()">REGISTER FOR 810 FC</button>
+<p id="regMsg" style="color:lime;font-weight:bold"></p>
+<h3>Registered Players:</h3>
+<ul id="playerList" style="color:gold"></ul>
+</section>
+
+<section>
+<h2>⚽ LIVE SCORES & FIXTURES</h2>
+<table id="scoreTable"><tr><th>Match</th><th>Score</th><th>Result</th></tr><tr><td>810 FC vs Pimville United</td><td>2-1</td><td>WIN</td></tr></table>
+<br>
+<input id="newMatch" placeholder="Opponent Team">
+<input id="newScore" placeholder="Score e.g. 3-0">
+<select id="newResult"><option>WIN</option><option>LOSS</option><option>DRAW</option></select>
+<button onclick="addScore()">ADD MATCH RESULT</button>
+</section>
+
+<section>
+<h2>About 810 FC</h2>
+<p>We are Pimville's pride! Grassroots football building future stars. Training: Tue & Thu 5PM, Pimville Ground.</p>
+<p>Chairman: Life Steve Nyakane | Contact: 810 FC WhatsApp</p>
+</section>
+
+<script>
+function register(){
+let n=document.getElementById("pName").value.trim();
+let p=document.getElementById("pPhone").value.trim();
+let o=document.getElementById("pPos").value;
+if(n.length<3){alert("Enter full name!");return}
+let a=JSON.parse(localStorage.getItem("810players")||"[]");
+a.push({name:n,phone:p,pos:o,date:new Date().toLocaleDateString()});
+localStorage.setItem("810players",JSON.stringify(a));
+document.getElementById("regMsg").innerHTML="✅ Welcome "+n+"! You are Player #"+a.length;
+document.getElementById("pName").value="";document.getElementById("pPhone").value="";
+showPlayers()
+}
+function showPlayers(){
+let a=JSON.parse(localStorage.getItem("810players")||"[]");
+let l="";
+a.forEach((p,i)=>{l+="<li>"+(i+1)+". "+p.name+" - "+p.pos+" ("+p.date+")</li>"});
+document.getElementById("playerList").innerHTML=l||"<li>No players yet</li>"
+}
+showPlayers();
+function addScore(){
+let m=document.getElementById("newMatch").value.trim();
+let s=document.getElementById("newScore").value.trim();
+let r=document.getElementById("newResult").value;
+if(!m||!s){alert("Enter opponent and score");return}
+let t=document.getElementById("scoreTable");
+let row=t.insertRow(-1);
+row.innerHTML="<td>810 FC vs "+m+"</td><td>"+s+"</td><td>"+r+"</td>";
+localStorage.setItem("810scores",t.innerHTML);
+document.getElementById("newMatch").value="";document.getElementById("newScore").value=""
+}
+let sv=localStorage.getItem("810scores");
+if(sv)document.getElementById("scoreTable").innerHTML=sv;
+</script>
+<footer>© 2026 810 FC Pimville | Built by Chairman Life Steve</footer>
+</body>
 </html>
