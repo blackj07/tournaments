@@ -1,137 +1,121 @@
-<!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>810 PIMVILLE FC - Tournaments</title>
+[10/3/2026 4:39 PM] blackj pips: <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>810 Pimville FC</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial;background:#0a3d0a;color:white}
-header{background:#0a3d0a;padding:25px;text-align:center;border-bottom:4px solid #FFD700}
-.logo{width:170px;height:170px;border-radius:50%;border:4px solid #FFD700;background:white;object-fit:cover}
-h1{color:#FFD700;font-size:32px;margin:12px 0 5px}
-.motto{color:#aaffaa;letter-spacing:3px;font-weight:bold}
-.card{background:white;color:#0a3d0a;border-radius:12px;padding:20px;margin:20px auto;max-width:900px}
-.fixture{border-left:5px solid #FFD700;padding-left:12px;margin:12px 0}
-.tourney{background:#fff8dc;border:2px solid #FFD700}
-.btn{background:#FFD700;color:#0a3d0a;padding:12px 22px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;display:inline-block;text-decoration:none;margin:5px}
-.btn-dark{background:#0a3d0a;color:#FFD700}
-.contact{background:#0a3d0a;color:white;border:2px solid #FFD700}
-.contact a{color:#FFD700;font-weight:bold}
-.admin{display:none;background:#111;padding:15px;border:2px dashed #FFD700;border-radius:10px;margin-top:15px}
-input{padding:10px;width:100%;margin:5px 0;border-radius:5px;border:1px solid #ccc}
+body{margin:0;font-family:Arial;background:#0a3d0a;color:white;text-align:center}
+.header{background:#001a00;padding:15px}
+.logo{width:80px;height:80px;background:gold;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;color:black;font-weight:bold;border:3px solid white}
+.card{background:white;color:black;margin:10px;padding:15px;border-radius:10px;text-align:left}
+.btn{background:gold;color:black;padding:10px 15px;border:none;border-radius:5px;font-weight:bold;cursor:pointer;margin:5px}
+.btn-dark{background:black;color:gold;border:1px solid gold}
+input{width:90%;padding:8px;margin:5px;border-radius:5px;border:1px solid #ccc}
+.yellow-box{background:gold;color:black;padding:10px;border-radius:10px;margin:10px}
 </style>
 </head>
 <body>
-<header>
-<img src="logo.png" class="logo" onerror="this.src='https://via.placeholder.com/170x170?text=810+FC'">
-<h1>⚽ 810 PIMVILLE FC ⚽</h1>
-<p class="motto">Official Tournaments & Team Page - Soweto</p>
-</header>
 
-<div class="card">
-<h2>🔥 Today's Fixture</h2>
-<div class="fixture">
-<p><strong id="teamA">810 Pimville FC</strong> <span id="scoreA">2</span> - <span id="scoreB">1</span> <strong id="teamB">Soweto Stars</strong></p>
-<p>🏟️ Pimville Grounds | ⏰ 15:00</p>
-</div>
-</div>
-
-<div class="card tourney">
-<h2>🏆 Tournaments Hosted by 810 Pimville FC</h2>
-<p>📌 <strong>Pimville Youth Cup - Dec 2025</strong> - 16 Teams</p>
-<p>📌 <strong>810 Top 8 - Coming Soon</strong> - 8 Teams - R5000 Prize</p>
-<p>📌 <strong>Soweto Derby Week</strong> - 810 Pimville vs All</p>
-<br>
-<p>Want to enter your team? WhatsApp us!</p>
-<a class="btn btn-dark" href="https://wa.me/27658936517" target="_blank">Enter Tournament</a>
-</div>
-
-<div class="card contact">
-<h2>📞 Contact - Click to Connect</h2>
-<p>✅ WhatsApp: <a href="https://wa.me/27658936517" target="_blank">+27 65 893 6517</a></p>
-<p>✅ YouTube: <a href="https://www.youtube.com/@810Pimville" target="_blank">@810Pimville</a></p>
-<p>✅ Facebook: <a href="https://www.facebook.com/share/16sX1dJb4n/" target="_blank">810 Pimville FC</a></p>
-<p>✅ Email: <a href="mailto:810pimvillefc@gmail.com">810pimvillefc@gmail.com</a></p>
+<div class="header">
+<div class="logo">810<br>PIMVILLE<br>FC</div>
+<h2>⚽ 810 PIMVILLE FC ⚽</h2>
+<p>Official Tournaments - Teka Pase - Soweto</p>
 </div>
 
 <div class="card">
-<button class="btn btn-dark" onclick="document.getElementById('admin').style.display='block'">🔐 Admin - Update Score</button>
-<!-- TEAM REGISTRATION -->
-<section id="register" style="background:#111; padding:30px 20px; text-align:center; border-top:3px solid #FFD700;">
-  <h2 style="color:#FFD700;">⚽ Register Team</h2>
-  <form id="regForm" style="max-width:400px; margin:auto; text-align:left;">
-    <input type="text" id="regTeam" placeholder="Team Name" required style="width:100%; padding:12px; margin:6px 0;">
-    <input type="text" id="regCoach" placeholder="Coach Name" required style="width:100%; padding:12px; margin:6px 0;">
-    <input type="text" id="regPhone" placeholder="WhatsApp 07..." required style="width:100%; padding:12px; margin:6px 0;">
-    <select id="regTour" style="width:100%; padding:12px; margin:6px 0;">
-      <option>Pimville Youth Cup</option>
-      <option>810 Top 8</option>
-      <option>Soweto Derby Week</option>
-    </select>
-    <button class="btn" type="submit" style="width:100%; background:#FFD700; color:#000; padding:14px; font-weight:bold; margin-top:10px;">REGISTER - MAKULA KONDZO!</button>
-  </form>
-</section>
-
-<script>
-document.getElementById('regForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  let t=document.getElementById('regTeam').value;
-  let c=document.getElementById('regCoach').value;
-  let p=document.getElementById('regPhone').value;
-  let tour=document.getElementById('regTour').value;
-  let msg=⚽ NEW REGISTRATION - 810 PIMVILLE FC%0A%0ATeam: ${t}%0ACoach: ${c}%0APhone: ${p}%0ATournament: ${tour};
-  window.open(https://wa.me/27658936517?text=${msg},'_blank');
-});
-
-<input id="inTeamA" placeholder="Team A">
-<input id="inScoreA" placeholder="Score A" type="number">
-<input id="inTeamB" placeholder="Team B">
-<input id="inScoreB" placeholder="Score B" type="number">
-<button class="btn" onclick="updateScore()">Save Score</button>
+<h3>📍 Today's Fixture</h3>
+<p><b id="teamA">810 Pimville FC</b> vs <b id="teamB">Soweto Stars</b></p>
+<p>Score: <span id="scoreA">2</span> - <span id="scoreB">1</span></p>
 </div>
-</div>
-</script>
 
-<!-- CHAIRMAN ONLY PANEL - HIDDEN -->
-<div id="admin" style="display:none;">
-  <span style="background:black;color:gold;padding:5px;border-radius:5px;">Admin - Update Score</span>
-  <!-- your Team A, Score inputs here -->
+<div class="card">
+<h3>🏆 Tournaments Hosted by 810 Pimville FC</h3>
+<p>Upcoming - Click to view details</p>
 </div>
-<div style="text-align:center; margin-bottom:10px;">
+
+<div class="card">
+<h3>📞 Contact - Click to Connect</h3>
+<p>WhatsApp: 066 212 3740</p>
+<p>YouTube: @Pimville</p>
+<p>Facebook: 810 Pimville FC</p>
+<p>Email: 810pimville@gmail.com</p>
+</div>
+
+<!-- PUBLIC REGISTRATION - ALWAYS VISIBLE -->
+<div class="card" style="background:#001a00;color:white;">
+<h3 style="color:gold;text-align:center;">⚽ Register Team</h3>
+<input id="regTeam" placeholder="Team Name">
+<input id="regContact" placeholder="Contact Number">
+<input id="regCoach" placeholder="Coach Name">
+<input id="regLocation" placeholder="Team Location">
+<button class="btn" onclick="registerTeam()" style="width:95%;">REGISTER - Message on WhatsApp</button>
+</div>
+
+<!-- CHAIRMAN BUTTONS - ALWAYS VISIBLE OUTSIDE ADMIN -->
+<div style="padding:15px;">
 <button class="btn" onclick="chairmanLogin()">🔐 Chairman Login</button>
 <button class="btn btn-dark" onclick="chairmanLogout()">Logout</button>
 </div>
+
+<!-- ADMIN PANEL - HIDDEN BY DEFAULT -->
+<div id="admin" class="card" style="display:none;background:#222;color:white;border:2px solid gold;">
+<h3 style="color:gold;">🔒 Admin - Update Score (Chairman Only)</h3>
+Team A: <input id="inTeamA" placeholder="Team A Name">
+Score A: <input id="inScoreA" placeholder="Score A">
+Team B: <input id="inTeamB" placeholder="Team B Name">
+Score B: <input id="inScoreB" placeholder="Score B">
+<button class="btn" onclick="updateScore()">Save Score</button>
+</div>
+
 <script>
-<script>
+// PUBLIC - WhatsApp Registration
+function registerTeam(){
+let team=document.getElementById('regTeam').value;
+let contact=document.getElementById('regContact').value;
+let msg="Hello Chairman! New Team Registration: "+team+" Contact: "+contact;
+window.open("https://wa.me/27662123740?text="+encodeURIComponent(msg),"_blank");
+}
+
+// CHAIRMAN ONLY - Password Lock
 function chairmanLogin(){
-  let p = prompt("Enter Chairman Password:");
-  if(p === "810Pimville2025"){
-    document.getElementById("admin").style.display = "block";
-    localStorage.setItem("isChairman","yes");
-    alert("Welcome Chairman ✅");
-  } else {
-    alert("❌ Wrong password");
-  }
+let p=prompt("Chairman, enter password:");
+if(p==="810Pimville2025"){
+document.getElementById("admin").style.display="block";
+localStorage.setItem("isChairman","yes");
+alert("Welcome Chairman ✅ Admin unlocked!");
+}else{
+alert("❌ Wrong password! Only Chairman allowed");
 }
+}
+
 function chairmanLogout(){
-  localStorage.removeItem("isChairman");
-  document.getElementById("admin").style.display = "none";
-  alert("Logged out - Admin hidden");
+localStorage.removeItem("isChairman");
+document.getElementById("admin").style.display="none";
+alert("Logged out - Admin hidden");
 }
-window.addEventListener("load", function(){
-  if(localStorage.getItem("isChairman") === "yes"){
-    document.getElementById("admin").style.display = "block";
-  }
-});
+
 function updateScore(){
-  let a=document.getElementById('inTeamA').value;
-  let sa=document.getElementById('inScoreA').value;
-  let b=document.getElementById('inTeamB').value;
-  let sb=document.getElementById('inScoreB').value;
-  if(a) document.getElementById('teamA').innerText=a;
-  if(sa) document.getElementById('scoreA').innerText=sa;
-  if(b) document.getElementById('teamB').innerText=b;
-  if(sb) document.getElementById('scoreB').innerText=sb;
-  alert('Score Updated!');
+let a=document.getElementById('inTeamA').value;
+let sa=document.getElementById('inScoreA').value;
+let b=document.getElementById('inTeamB').value;
+[10/3/2026 4:39 PM] blackj pips: let sb=document.getElementById('inScoreB').value;
+if(a) document.getElementById('teamA').innerText=a;
+if(sa) document.getElementById('scoreA').innerText=sa;
+if(b) document.getElementById('teamB').innerText=b;
+if(sb) document.getElementById('scoreB').innerText=sb;
+alert("Score Updated! ✅");
 }
+
+// Auto-check on load
+window.addEventListener("load",function(){
+if(localStorage.getItem("isChairman")==="yes"){
+document.getElementById("admin").style.display="block";
+}else{
+document.getElementById("admin").style.display="none";
+}
+});
 </script>
+
 </body>
 </html>
