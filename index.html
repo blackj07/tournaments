@@ -10,29 +10,21 @@ body{margin:0;font-family:Arial;background:#0a3d0a;color:white;text-align:center
 .logo{width:85px;height:85px;background:gold;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;color:black;font-weight:bold;border:3px solid white}
 .card{background:white;color:black;margin:10px;padding:15px;border-radius:10px;text-align:left}
 .btn{background:gold;color:black;padding:14px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;margin:5px;width:95%;font-size:17px}
-input{width:92%;padding:12px;margin:6px 0;border-radius:6px;border:1px solid #ccc;font-size:16px}
+input,select{width:92%;padding:12px;margin:6px 0;border-radius:6px;border:1px solid #ccc;font-size:16px}
 a{color:blue;font-weight:bold}
 </style>
 </head>
 <body>
 
-<div class="header">
-<div class="logo">810<br>FC</div>
-<h2>810 PIMVILLE FC</h2>
-<p>Official - Soweto</p>
-</div>
+<div class="header"><div class="logo">810 FC</div><h2>810 PIMVILLE FC</h2><p>Official - Soweto</p></div>
 
-<div class="card">
-<h3>Today Fixture</h3>
-<p><b id="teamA">810 Pimville FC</b> vs <b id="teamB">Soweto Stars</b> - Score <span id="scoreA">2</span>-<span id="scoreB">1</span></p>
-</div>
+<div class="card"><h3>Today Fixture</h3><p><b id="teamA">810 Pimville FC</b> vs <b id="teamB">Soweto Stars</b> - <span id="scoreA">2</span>-<span id="scoreB">1</span></p></div>
 
 <div class="card">
 <h3>Contact - Click to Connect</h3>
-<p>Email: <a href="mailto:810pimville@gmail.com">810pimville@gmail.com - Click to Email</a></p>
-<p>Call: <a href="tel:+27658936517">0658936517 - Click to Call</a></p>
-<p>WhatsApp: <a href="https://wa.me/27658936517">0658936517 - Click to WhatsApp</a></p>
-<p>YouTube: <a href="https://youtube.com/@Pimville">YouTube - Click</a></p>
+<p>Email: <a href="mailto:810pimville@gmail.com">810pimville@gmail.com</a></p>
+<p>WhatsApp: <a href="https://wa.me/27658936517" target="_blank">0658936517 Click WhatsApp</a></p>
+<p>Call: <a href="tel:+27658936517">0658936517 Call</a></p>
 </div>
 
 <div class="card" style="background:#001a00;color:white;">
@@ -41,91 +33,99 @@ a{color:blue;font-weight:bold}
 <input id="regContact" placeholder="Contact Person">
 <input id="regPhone" placeholder="Phone Number *">
 <input id="regLocation" placeholder="Location">
-<button type="button" class="btn" onclick="registerTeam()">REGISTER - Message on WhatsApp</button>
+<button type="button" class="btn" id="regBtn">REGISTER - Message on WhatsApp</button>
 <p style="color:gold;">Teams Registered: <span id="teamCount">0</span></p>
 </div>
 
 <div style="padding:20px;background:#111;border-top:3px solid gold;">
 <p style="color:gold;">Chairman Area</p>
-<button type="button" class="btn" onclick="chairmanLogin()" style="width:45%;background:yellow;">Chairman Login</button>
-<button type="button" class="btn" onclick="chairmanLogout()" style="width:30%;background:black;color:gold;border:1px solid gold;">Logout</button>
+<button type="button" class="btn" id="loginBtn" style="width:45%;background:yellow;">Chairman Login</button>
+<button type="button" class="btn" id="logoutBtn" style="width:30%;background:black;color:gold;border:1px solid gold;">Logout</button>
 </div>
 
 <div id="admin" style="display:none;background:#222;margin:10px;padding:15px;border-radius:10px;border:2px solid gold;text-align:left;">
-<h3 style="color:gold;">Admin</h3>
-Team A: <input id="inTeamA" placeholder="Team A"><br>
-Score A: <input id="inScoreA" type="number"><br>
-Team B: <input id="inTeamB" placeholder="Team B"><br>
-Score B: <input id="inScoreB" type="number"><br>
-<button type="button" class="btn" onclick="updateScore()">Save Score</button>
+<h3 style="color:gold;">Admin - Chairman Only</h3>
+<label>Choose Team A:</label><select id="inTeamASelect"><option value="">-- Select --</option><option value="810 Pimville FC">810 Pimville FC</option><option value="Soweto Stars">Soweto Stars</option></select>
+<input id="inTeamA" placeholder="Or type Team A">
+Score A: <input id="inScoreA" type="number">
+<label>Choose Team B:</label><select id="inTeamBSelect"><option value="">-- Select --</option><option value="810 Pimville FC">810 Pimville FC</option><option value="Soweto Stars">Soweto Stars</option></select>
+<input id="inTeamB" placeholder="Or type Team B">
+Score B: <input id="inScoreB" type="number">
+<button type="button" class="btn" id="saveScoreBtn">Save Score</button>
 <div id="registeredList" style="background:white;color:black;padding:10px;margin-top:10px;">No teams</div>
 </div>
 
 <script>
-var teams = [];
-var saved = localStorage.getItem("teams810");
-if(saved){ try{ teams = JSON.parse(saved); }catch(e){} }
+var teams=[];
+try{var saved=localStorage.getItem("teams810");if(saved)teams=JSON.parse(saved);}catch(e){teams=[];}
 
-function showCount(){
-  document.getElementById("teamCount").innerText = teams.length;
-  var list = document.getElementById("registeredList");
-  if(teams.length==0){ list.innerHTML="No teams yet"; }
-  else{
-    var t="";
-    for(var i=0;i<teams.length;i++){ t += teams[i].team+" - "+teams[i].phone+"<br>"; }
-    list.innerHTML=t;
-  }
+function showCounts(){
+ document.getElementById("teamCount").innerText=teams.length;
+ var selA=document.getElementById("inTeamASelect");
+ var selB=document.getElementById("inTeamBSelect");
+ var htmlA='<option value="">-- Select --</option><option value="810 Pimville FC">810 Pimville FC</option><option value="Soweto Stars">Soweto Stars</option>';
+ var htmlB='<option value="">-- Select --</option><option value="810 Pimville FC">810 Pimville FC</option><option value="Soweto Stars">Soweto Stars</option>';
+[10/3/2026 5:45 PM] blackj pips: for(var i=0;i<teams.length;i++){htmlA+='<option value="'+teams[i].team+'">'+teams[i].team+'</option>';htmlB+='<option value="'+teams[i].team+'">'+teams[i].team+'</option>';}
+ selA.innerHTML=htmlA; selB.innerHTML=htmlB;
+ var list=document.getElementById("registeredList");
+ if(teams.length==0)list.innerHTML="No teams yet";else{var t="";for(var j=0;j<teams.length;j++)t+=teams[j].team+" - "+teams[j].phone+"<br>";list.innerHTML=t;}
 }
 
 function registerTeam(){
-  var team = document.getElementById("regTeam").value;
-  var phone = document.getElementById("regPhone").value;
-  if(team=="" || phone==""){ alert("Enter Team Name and Phone"); return; }
-  var contact = document.getElementById("regContact").value;
-  var loc = document.getElementById("regLocation").value;
-[10/3/2026 5:32 PM] blackj pips: teams.push({team:team,phone:phone,contact:contact,location:loc});
-  localStorage.setItem("teams810", JSON.stringify(teams));
-  showCount();
-  alert("Registered! Total teams: "+teams.length);
-  var msg = "810 PIMVILLE NEW TEAM%0ATeam: "+team+"%0APhone: "+phone+"%0AContact: "+contact+"%0ALocation: "+loc;
-  window.open("https://wa.me/27658936517?text="+msg,"_blank");
-  document.getElementById("regTeam").value="";
-  document.getElementById("regPhone").value="";
-  document.getElementById("regContact").value="";
-  document.getElementById("regLocation").value="";
+ var team=document.getElementById("regTeam").value.trim();
+ var phone=document.getElementById("regPhone").value.trim();
+ if(team==""||phone==""){alert("Enter Team Name and Phone");return;}
+ var contact=document.getElementById("regContact").value.trim();
+ var loc=document.getElementById("regLocation").value.trim();
+ teams.push({team:team,phone:phone,contact:contact,location:loc});
+ localStorage.setItem("teams810",JSON.stringify(teams));
+ showCounts();
+ var msg="810 PIMVILLE NEW TEAM%0ATeam: "+team+"%0APhone: "+phone;
+ window.open("https://wa.me/27658936517?text="+msg,"_blank");
+ document.getElementById("regTeam").value="";document.getElementById("regPhone").value="";document.getElementById("regContact").value="";document.getElementById("regLocation").value="";
+ alert("Registered! Total: "+teams.length);
 }
 
 function chairmanLogin(){
-  var p = prompt("Chairman enter password:");
-  if(p=="810Pimville2025"){
-    document.getElementById("admin").style.display="block";
-    localStorage.setItem("isChairman","yes");
-    showCount();
-    alert("Welcome Chairman!");
-  } else if(p!=null){ alert("Wrong password"); }
+ var p=prompt("Chairman enter password:");
+ if(p=="810Pimville2025"){
+  document.getElementById("admin").style.display="block";
+  localStorage.setItem("isChairman","yes");
+  showCounts();
+  alert("Welcome Chairman!");
+ }else if(p!=null){alert("Wrong password");}
 }
 
 function chairmanLogout(){
-  document.getElementById("admin").style.display="none";
-  localStorage.removeItem("isChairman");
-  alert("Logged out");
+ document.getElementById("admin").style.display="none";
+ localStorage.removeItem("isChairman");
+ alert("Logged out");
 }
 
 function updateScore(){
-  var a = document.getElementById("inTeamA").value;
-  var sa = document.getElementById("inScoreA").value;
-  var b = document.getElementById("inTeamB").value;
-  var sb = document.getElementById("inScoreB").value;
-  if(a) document.getElementById("teamA").innerText=a;
-  if(sa) document.getElementById("scoreA").innerText=sa;
-  if(b) document.getElementById("teamB").innerText=b;
-  if(sb) document.getElementById("scoreB").innerText=sb;
-  alert("Score saved!");
+ var a=document.getElementById("inTeamA").value;
+ if(a=="")a=document.getElementById("inTeamASelect").value;
+ var sa=document.getElementById("inScoreA").value;
+ var b=document.getElementById("inTeamB").value;
+ if(b=="")b=document.getElementById("inTeamBSelect").value;
+ var sb=document.getElementById("inScoreB").value;
+ if(a)document.getElementById("teamA").innerText=a;
+ if(sa)document.getElementById("scoreA").innerText=sa;
+ if(b)document.getElementById("teamB").innerText=b;
+ if(sb)document.getElementById("scoreB").innerText=sb;
+ alert("Score Updated!");
 }
 
-showCount();
-if(localStorage.getItem("isChairman")=="yes"){ document.getElementById("admin").style.display="block"; }
+document.addEventListener("DOMContentLoaded",function(){
+ document.getElementById("regBtn").addEventListener("click",registerTeam);
+ document.getElementById("loginBtn").addEventListener("click",chairmanLogin);
+ document.getElementById("logoutBtn").addEventListener("click",chairmanLogout);
+ document.getElementById("saveScoreBtn").addEventListener("click",updateScore);
+ document.getElementById("inTeamASelect").addEventListener("change",function(){document.getElementById("inTeamA").value=this.value;});
+ document.getElementById("inTeamBSelect").addEventListener("change",function(){document.getElementById("inTeamB").value=this.value;});
+ showCounts();
+ if(localStorage.getItem("isChairman")=="yes"){document.getElementById("admin").style.display="block";}
+});
 </script>
-
 </body>
 </html>
