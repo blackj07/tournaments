@@ -14,7 +14,6 @@ body{margin:0;font-family:Arial;background:#0a3d0a;color:white;text-align:center
 .btn-dark{background:black;color:gold;border:1px solid gold}
 input{width:92%;padding:10px;margin:6px 0;border-radius:6px;border:1px solid #ccc}
 a{color:blue;text-decoration:none;font-weight:bold}
-a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -54,34 +53,62 @@ a:hover{text-decoration:underline}
 <input id="regPhone" placeholder="Phone Number *">
 <input id="regLocation" placeholder="Team Location">
 <button type="button" class="btn" onclick="registerTeam()" style="width:96%;">REGISTER - Message on WhatsApp</button>
+<p style="color:gold;text-align:center;margin-top:10px;font-weight:bold;">Teams Registered: <span id="teamCount">0</span> ⚽</p>
+<p id="lastTeam" style="color:white;text-align:center;font-size:13px;"></p>
 </div>
 
-<!-- CHAIRMAN BUTTONS - ALWAYS VISIBLE -->
 <div style="padding:20px;background:#111;border-top:3px solid gold;">
 <p style="color:gold;margin:0 0 10px 0;">Chairman Area</p>
-<button type="button" id="loginBtn" class="btn">🔐 Chairman Login</button>
-<button type="button" id="logoutBtn" class="btn btn-dark">Logout</button>
+<button type="button" id="loginBtn" class="btn" onclick="chairmanLogin()">🔐 Chairman Login</button>
+<button type="button" id="logoutBtn" class="btn btn-dark" onclick="chairmanLogout()">Logout</button>
 </div>
 
 <div id="admin" style="display:none;background:#222;color:white;margin:10px;padding:15px;border-radius:10px;border:2px solid gold;text-align:left;">
 <h3 style="color:gold;">🔒 Admin - Update Score (Chairman Only)</h3>
 Team A: <input id="inTeamA" placeholder="Team A Name"><br>
 Score A: <input id="inScoreA" placeholder="Score A"><br>
-Team B: <input id="inTeamB" placeholder="Team B Name"><br>
+[10/3/2026 6:17 PM] blackj pips: Team B: <input id="inTeamB" placeholder="Team B Name"><br>
 Score B: <input id="inScoreB" placeholder="Score B"><br>
 <button type="button" class="btn" onclick="updateScore()">Save Score</button>
+<div id="teamList" style="background:white;color:black;padding:10px;margin-top:10px;border-radius:5px;">No teams yet</div>
 </div>
-[10/3/2026 5:54 PM] blackj pips: <script>
-// Make functions global - no errors
+
+<script>
+// COUNTER - SAFE, NO ERRORS
+var teams = [];
+try {
+ var saved = localStorage.getItem("teams810");
+ if(saved) teams = JSON.parse(saved);
+} catch(e) { teams = []; }
+
+function showCounter(){
+ document.getElementById("teamCount").innerText = teams.length;
+ var listDiv = document.getElementById("teamList");
+ var lastDiv = document.getElementById("lastTeam");
+ if(teams.length==0){
+  listDiv.innerHTML = "No teams yet";
+  lastDiv.innerHTML = "";
+ } else {
+  var html = "";
+  for(var i=0;i<teams.length;i++){ html += (i+1)+". "+teams[i].team+" - "+teams[i].phone+"<br>"; }
+  listDiv.innerHTML = html;
+  lastDiv.innerHTML = "Last: "+teams[teams.length-1].team+" from "+teams[teams.length-1].location;
+ }
+}
+
 function registerTeam(){
  let team=document.getElementById('regTeam').value.trim();
  let phone=document.getElementById('regPhone').value.trim();
- if(!team || !phone){ alert("Please enter Team Name and Phone"); return; }
+ if(!team ||!phone){ alert("Please enter Team Name and Phone"); return; }
  let contact=document.getElementById('regContact').value;
  let loc=document.getElementById('regLocation').value;
+ teams.push({team:team,phone:phone,contact:contact,location:loc});
+ localStorage.setItem("teams810", JSON.stringify(teams));
+ showCounter();
  let msg="*810 PIMVILLE REGISTRATION*%0A%0ATeam: "+team+"%0AContact: "+contact+"%0APhone: "+phone+"%0ALocation: "+loc;
  window.open("https://wa.me/27658936517?text="+msg,"_blank");
- alert("✅ Sent to Chairman WhatsApp!");
+ document.getElementById('regTeam').value="";document.getElementById('regContact').value="";document.getElementById('regPhone').value="";document.getElementById('regLocation').value="";
+ alert("✅ Sent! Total teams: "+teams.length);
 }
 
 function chairmanLogin(){
@@ -89,16 +116,15 @@ function chairmanLogin(){
  if(p==="810Pimville2025"){
   document.getElementById("admin").style.display="block";
   localStorage.setItem("isChairman","yes");
-  alert("Welcome Chairman ✅ Admin unlocked - scroll up to see Update Score");
- }else if(p!==null){
-  alert("❌ Wrong password! Only Chairman allowed");
- }
+  showCounter();
+  alert("Welcome Chairman ✅ Admin unlocked - scroll to see team list");
+ }else if(p!==null){ alert("❌ Wrong password!"); }
 }
 
 function chairmanLogout(){
  localStorage.removeItem("isChairman");
  document.getElementById("admin").style.display="none";
- alert("Logged out - Admin hidden");
+ alert("Logged out");
 }
 
 function updateScore(){
@@ -110,18 +136,12 @@ function updateScore(){
  if(sa) document.getElementById('scoreA').innerText=sa;
  if(b) document.getElementById('teamB').innerText=b;
  if(sb) document.getElementById('scoreB').innerText=sb;
- alert("Score Updated! ✅");
+ alert("Score Updated!");
 }
 
-// Attach click events safely - fixes bug where onclick doesn't work
-document.addEventListener("DOMContentLoaded", function(){
- document.getElementById("loginBtn").addEventListener("click", chairmanLogin);
- document.getElementById("logoutBtn").addEventListener("click", chairmanLogout);
- if(localStorage.getItem("isChairman")==="yes"){
-   document.getElementById("admin").style.display="block";
- }
- console.log("810 Pimville FC loaded - Chairman buttons attached");
-});
+// Load counter on start
+showCounter();
+if(localStorage.getItem("isChairman")==="yes"){ document.getElementById("admin").style.display="block"; }
 </script>
 
 </body>
