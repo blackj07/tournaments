@@ -3,17 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>810 Pimville FC</title>
+<title>810 Pimville FC - Official Tournaments</title>
 <style>
 body{margin:0;font-family:Arial;background:#0a3d0a;color:white;text-align:center}
 .header{background:#001a00;padding:15px}
 .logo{width:80px;height:80px;background:gold;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;color:black;font-weight:bold;border:3px solid white}
-.card{background:white;color:black;margin:10px;padding:15px;border-radius:10px;text-align:left;cursor:pointer}
-.card:hover{border:2px solid gold}
+.card{background:white;color:black;margin:10px;padding:15px;border-radius:10px;text-align:left}
 .btn{background:gold;color:black;padding:12px 18px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;margin:5px}
 .btn-dark{background:black;color:gold;border:1px solid gold}
+.btn-red{background:#c00;color:white;border:1px solid white}
 input{width:92%;padding:10px;margin:6px 0;border-radius:6px;border:1px solid #ccc}
-a{color:blue;text-decoration:none;font-weight:bold}
+a{color:blue;font-weight:bold;text-decoration:none}
+.yellow-bar{background:#001a00;border:2px solid gold;margin:10px;border-radius:10px;padding:10px}
 </style>
 </head>
 <body>
@@ -24,40 +25,36 @@ a{color:blue;text-decoration:none;font-weight:bold}
 <p>Official Tournaments - Teka Pase - Soweto</p>
 </div>
 
-<div class="card" onclick="alert('810 Pimville FC Fixtures:\n\n• Pimville Youth Cup - 12 Oct\n• 810 Pimville Cup - 19 Oct\n\nClick REGISTER below to join!')">
-<h3>📍 Today's Fixture - Click to view</h3>
+<div class="card">
+<h3>📍 Today's Fixture</h3>
 <p><b id="teamA">810 Pimville FC</b> vs <b id="teamB">Soweto Stars</b></p>
 <p>Score: <span id="scoreA">2</span> - <span id="scoreB">1</span></p>
 </div>
 
-<div class="card" onclick="document.getElementById('regTeam').scrollIntoView({behavior:'smooth'});">
+<div class="card">
 <h3>🏆 Tournaments Hosted by 810 Pimville FC</h3>
-<p>Upcoming - Click to view details ➡️</p>
-<p style="color:green;font-weight:bold;">Pimville Youth Cup | 810 Pimville Cup - Click to Register!</p>
+<p>Pimville Youth Cup | 810 Pimville Cup</p>
 </div>
 
-<div class="card" style="cursor:default;">
+<div class="card">
 <h3>📞 Contact - Click to Connect</h3>
-<p>📱 WhatsApp 1: <a href="https://wa.me/27662123740" target="_blank">066 212 3740 - Click to WhatsApp</a></p>
-<p>📱 WhatsApp 2: <a href="https://wa.me/27658936517" target="_blank">065 893 6517 - Click to WhatsApp</a></p>
-<p>▶️ YouTube: <a href="https://youtube.com/@Pimville" target="_blank">@Pimville - Click to Watch</a></p>
-<p>📘 Facebook: <a href="https://facebook.com" target="_blank">810 Pimville FC - Click to View</a></p>
-<p>✉️ Email: <a href="mailto:810pimville@gmail.com">810pimville@gmail.com - Click to Email</a></p>
-<p>📞 Call: <a href="tel:+27662123740">0662123740 - Click to Call</a></p>
+<p>📱 WhatsApp: <a href="https://wa.me/27662123740" target="_blank">066 212 3740</a> | <a href="https://wa.me/27658936517" target="_blank">065 893 6517</a></p>
+<p>✉️ Email: <a href="mailto:810pimville@gmail.com">810pimville@gmail.com</a></p>
+<p>📞 Call: <a href="tel:+27662123740">0662123740</a></p>
 </div>
 
-<div class="card" style="background:#001a00;color:white;cursor:default;">
-<h3 style="color:gold;text-align:center;">⚽ Register Team</h3>
+<div class="yellow-bar">
+<h3 style="color:gold;text-align:center;margin:5px;">⚽ Register Team</h3>
 <input id="regTeam" placeholder="Team Name *">
 <input id="regContact" placeholder="Contact Person">
 <input id="regPhone" placeholder="Phone Number *">
 <input id="regLocation" placeholder="Team Location">
 <button type="button" class="btn" onclick="registerTeam()" style="width:96%;">REGISTER - Message on WhatsApp</button>
-<p style="color:gold;text-align:center;margin-top:10px;font-weight:bold;">Teams Registered: <span id="teamCount">0</span> ⚽</p>
-<p id="lastTeam" style="color:white;text-align:center;font-size:13px;"></p>
+<p style="color:gold;text-align:center;margin:10px 0 0 0;font-weight:bold;">Teams Registered: <span id="teamCount">0</span> ⚽</p>
+<p id="lastTeam" style="color:white;text-align:center;font-size:13px;margin:5px;">No teams yet</p>
 </div>
 
-<div style="padding:20px;background:#111;border-top:3px solid gold;">
+<div style="padding:15px;background:#111;border-top:3px solid gold;border-bottom:3px solid gold;">
 <p style="color:gold;margin:0 0 10px 0;">Chairman Area</p>
 <button type="button" id="loginBtn" class="btn" onclick="chairmanLogin()">🔐 Chairman Login</button>
 <button type="button" id="logoutBtn" class="btn btn-dark" onclick="chairmanLogout()">Logout</button>
@@ -70,40 +67,49 @@ Score A: <input id="inScoreA" placeholder="Score A"><br>
 Team B: <input id="inTeamB" placeholder="Team B Name"><br>
 Score B: <input id="inScoreB" placeholder="Score B"><br>
 <button type="button" class="btn" onclick="updateScore()">Save Score</button>
-<div id="teamList" style="background:white;color:black;padding:10px;margin-top:10px;border-radius:5px;">No teams yet</div>
+
+<div style="margin-top:15px;border-top:1px solid gold;padding-top:10px;">
+<h4 style="color:gold;margin:5px 0;">📋 Registered Teams List:</h4>
+<div id="teamList" style="background:white;color:black;padding:10px;border-radius:5px;min-height:40px;">No teams yet</div>
+
+<!-- DELETE BUTTONS - NEW -->
+<div style="margin-top:10px;text-align:center;">
+<button type="button" class="btn btn-dark" onclick="clearLastTeam()">🗑️ Delete Last Wrong Entry</button>
+<button type="button" class="btn btn-red" onclick="clearAllTeams()">❌ Clear ALL Teams</button>
+</div>
+<p style="font-size:11px;color:#aaa;text-align:center;">Use Delete Last to remove test fc, TTT etc. Clear ALL to start fresh at 0</p>
+</div>
 </div>
 
 <script>
-// COUNTER - SAFE, NO ERRORS
-var teams = [];
-try {
- var saved = localStorage.getItem("teams810");
- if(saved) teams = JSON.parse(saved);
-} catch(e) { teams = []; }
+var teams=[];
+try{var s=localStorage.getItem("teams810");if(s)teams=JSON.parse(s);}catch(e){teams=[];}
 
 function showCounter(){
- document.getElementById("teamCount").innerText = teams.length;
- var listDiv = document.getElementById("teamList");
- var lastDiv = document.getElementById("lastTeam");
+ document.getElementById("teamCount").innerText=teams.length;
+ var lastDiv=document.getElementById("lastTeam");
+ var listDiv=document.getElementById("teamList");
  if(teams.length==0){
-  listDiv.innerHTML = "No teams yet";
-  lastDiv.innerHTML = "";
- } else {
-  var html = "";
-  for(var i=0;i<teams.length;i++){ html += (i+1)+". "+teams[i].team+" - "+teams[i].phone+"<br>"; }
-  listDiv.innerHTML = html;
-  lastDiv.innerHTML = "Last: "+teams[teams.length-1].team+" from "+teams[teams.length-1].location;
+  lastDiv.innerText="No teams yet";
+  listDiv.innerHTML="No teams yet - register first team";
+ }else{
+  lastDiv.innerText="Last: "+teams[teams.length-1].team+" from "+(teams[teams.length-1].location||"");
+  var html="";
+  for(var i=0;i<teams.length;i++){
+   html+=(i+1)+". "+teams[i].team+" - "+teams[i].phone+" ("+(teams[i].location||"")+")<br>";
+  }
+  listDiv.innerHTML=html;
  }
 }
 
 function registerTeam(){
  let team=document.getElementById('regTeam').value.trim();
  let phone=document.getElementById('regPhone').value.trim();
- if(!team ||!phone){ alert("Please enter Team Name and Phone"); return; }
- let contact=document.getElementById('regContact').value;
- let loc=document.getElementById('regLocation').value;
+ if(!team||!phone){alert("Please enter Team Name and Phone");return;}
+ let contact=document.getElementById('regContact').value.trim();
+ let loc=document.getElementById('regLocation').value.trim();
  teams.push({team:team,phone:phone,contact:contact,location:loc});
- localStorage.setItem("teams810", JSON.stringify(teams));
+ localStorage.setItem("teams810",JSON.stringify(teams));
  showCounter();
  let msg="*810 PIMVILLE REGISTRATION*%0A%0ATeam: "+team+"%0AContact: "+contact+"%0APhone: "+phone+"%0ALocation: "+loc;
  window.open("https://wa.me/27658936517?text="+msg,"_blank");
@@ -117,8 +123,8 @@ function chairmanLogin(){
   document.getElementById("admin").style.display="block";
   localStorage.setItem("isChairman","yes");
   showCounter();
-  alert("Welcome Chairman ✅ Admin unlocked - scroll to see team list");
- }else if(p!==null){ alert("❌ Wrong password!"); }
+  alert("Welcome Chairman ✅");
+ }else if(p!==null){alert("❌ Wrong password!");}
 }
 
 function chairmanLogout(){
@@ -132,16 +138,34 @@ function updateScore(){
  let sa=document.getElementById('inScoreA').value;
  let b=document.getElementById('inTeamB').value;
  let sb=document.getElementById('inScoreB').value;
- if(a) document.getElementById('teamA').innerText=a;
- if(sa) document.getElementById('scoreA').innerText=sa;
- if(b) document.getElementById('teamB').innerText=b;
- if(sb) document.getElementById('scoreB').innerText=sb;
+ if(a)document.getElementById('teamA').innerText=a;
+ if(sa)document.getElementById('scoreA').innerText=sa;
+ if(b)document.getElementById('teamB').innerText=b;
+ if(sb)document.getElementById('scoreB').innerText=sb;
  alert("Score Updated!");
 }
 
-// Load counter on start
+function clearLastTeam(){
+ if(teams.length==0){alert("No teams to delete");return;}
+ if(confirm("Delete last team: "+teams[teams.length-1].team+"?")){
+  teams.pop();
+  localStorage.setItem("teams810",JSON.stringify(teams));
+  showCounter();
+  alert("Deleted! Now "+teams.length+" teams");
+ }
+}
+
+function clearAllTeams(){
+ if(confirm("Chairman, DELETE ALL "+teams.length+" teams? This will make counter 0")){
+  teams=[];
+  localStorage.setItem("teams810",JSON.stringify(teams));
+  showCounter();
+  alert("All cleared! Now 0 teams - fresh start!");
+ }
+}
+
 showCounter();
-if(localStorage.getItem("isChairman")==="yes"){ document.getElementById("admin").style.display="block"; }
+if(localStorage.getItem("isChairman")==="yes"){document.getElementById("admin").style.display="block";}
 </script>
 
 </body>
