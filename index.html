@@ -7,105 +7,92 @@
 <style>
 body{margin:0;font-family:Arial;background:#0a3d0a;color:white;text-align:center}
 .header{background:#001a00;padding:15px}
-.logo{width:80px;height:80px;background:gold;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;color:black;font-weight:bold;border:3px solid white}
+.logo{width:85px;height:85px;background:gold;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;color:black;font-weight:bold;border:3px solid white}
 .card{background:white;color:black;margin:10px;padding:15px;border-radius:10px;text-align:left}
-.btn{background:gold;color:black;padding:14px 18px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;margin:5px;font-size:17px;width:95%}
-.btn:active{background:orange}
-input,select{width:92%;padding:12px;margin:6px 0;border-radius:6px;border:1px solid #ccc;font-size:16px}
+.btn{background:gold;color:black;padding:14px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;margin:5px;width:95%;font-size:17px}
+input{width:92%;padding:12px;margin:6px 0;border-radius:6px;border:1px solid #ccc;font-size:16px}
 a{color:blue;font-weight:bold}
 </style>
 </head>
 <body>
 
 <div class="header">
-<div class="logo">810 PIMVILLE FC</div>
-<h2>⚽ 810 PIMVILLE FC ⚽</h2>
+<div class="logo">810<br>FC</div>
+<h2>810 PIMVILLE FC</h2>
 <p>Official - Soweto</p>
 </div>
 
 <div class="card">
-<h3>📍 Today Fixture</h3>
-<p><b id="teamA">810 Pimville FC</b> vs <b id="teamB">Soweto Stars</b> : <span id="scoreA">2</span>-<span id="scoreB">1</span></p>
+<h3>Today Fixture</h3>
+<p><b id="teamA">810 Pimville FC</b> vs <b id="teamB">Soweto Stars</b> - Score <span id="scoreA">2</span>-<span id="scoreB">1</span></p>
 </div>
 
 <div class="card">
-<h3>📞 Contact - Click to Connect</h3>
+<h3>Contact - Click to Connect</h3>
 <p>Email: <a href="mailto:810pimville@gmail.com">810pimville@gmail.com - Click to Email</a></p>
 <p>Call: <a href="tel:+27658936517">0658936517 - Click to Call</a></p>
-<p>WhatsApp: <a href="https://wa.me/27658936517">0658936517 - Click WhatsApp</a></p>
+<p>WhatsApp: <a href="https://wa.me/27658936517">0658936517 - Click to WhatsApp</a></p>
+<p>YouTube: <a href="https://youtube.com/@Pimville">YouTube - Click</a></p>
 </div>
 
 <div class="card" style="background:#001a00;color:white;">
-<h3 style="color:gold;text-align:center;">⚽ Register Team</h3>
+<h3 style="color:gold;text-align:center;">Register Team</h3>
 <input id="regTeam" placeholder="Team Name *">
 <input id="regContact" placeholder="Contact Person">
 <input id="regPhone" placeholder="Phone Number *">
-<input id="regLocation" placeholder="Team Location">
-<!-- DIRECT ONCLICK - WILL CLICK 100% -->
-<button type="button" class="btn" onclick="registerTeam()" style="background:yellow;">REGISTER - Message on WhatsApp</button>
+<input id="regLocation" placeholder="Location">
+<button type="button" class="btn" onclick="registerTeam()">REGISTER - Message on WhatsApp</button>
 <p style="color:gold;">Teams Registered: <span id="teamCount">0</span></p>
-<div id="lastTeam" style="color:white;font-size:13px;"></div>
 </div>
 
 <div style="padding:20px;background:#111;border-top:3px solid gold;">
 <p style="color:gold;">Chairman Area</p>
-<!-- DIRECT ONCLICK - WILL POP PASSWORD 100% -->
-<button type="button" class="btn" onclick="chairmanLogin()" style="background:yellow;width:45%;">🔐 Chairman Login</button>
-<button type="button" class="btn" onclick="chairmanLogout()" style="background:black;color:gold;border:1px solid gold;width:30%;">Logout</button>
+<button type="button" class="btn" onclick="chairmanLogin()" style="width:45%;background:yellow;">Chairman Login</button>
+<button type="button" class="btn" onclick="chairmanLogout()" style="width:30%;background:black;color:gold;border:1px solid gold;">Logout</button>
 </div>
 
 <div id="admin" style="display:none;background:#222;margin:10px;padding:15px;border-radius:10px;border:2px solid gold;text-align:left;">
-<h3 style="color:gold;">🔒 Admin - Chairman Only</h3>
-Team A: <input id="inTeamA" placeholder="Team A Name">
-Score A: <input id="inScoreA" type="number" placeholder="2">
-Team B: <input id="inTeamB" placeholder="Team B Name">
-Score B: <input id="inScoreB" type="number" placeholder="1">
+<h3 style="color:gold;">Admin</h3>
+Team A: <input id="inTeamA" placeholder="Team A"><br>
+Score A: <input id="inScoreA" type="number"><br>
+Team B: <input id="inTeamB" placeholder="Team B"><br>
+Score B: <input id="inScoreB" type="number"><br>
 <button type="button" class="btn" onclick="updateScore()">Save Score</button>
-<div id="registeredList" style="background:white;color:black;padding:10px;margin-top:10px;border-radius:5px;">No teams yet</div>
+<div id="registeredList" style="background:white;color:black;padding:10px;margin-top:10px;">No teams</div>
 </div>
 
 <script>
-// FIXED SIMPLE CODE - NO ERRORS
 var teams = [];
-try {
-  var saved = localStorage.getItem("teams810");
-  if(saved){ teams = JSON.parse(saved); }
-} catch(e){ teams = []; }
+var saved = localStorage.getItem("teams810");
+if(saved){ try{ teams = JSON.parse(saved); }catch(e){} }
 
-function showTeams(){
+function showCount(){
   document.getElementById("teamCount").innerText = teams.length;
   var list = document.getElementById("registeredList");
-  var last = document.getElementById("lastTeam");
-  if(teams.length==0){
-    list.innerHTML="No teams yet";
-    last.innerHTML="";
-  } else {
-    var txt="";
-    for(var i=0;i<teams.length;i++){ txt += (i+1)+". "+teams[i].team+" - "+teams[i].phone+"<br>"; }
-    list.innerHTML = txt;
-    last.innerHTML = "Last: "+teams[teams.length-1].team;
+  if(teams.length==0){ list.innerHTML="No teams yet"; }
+  else{
+    var t="";
+    for(var i=0;i<teams.length;i++){ t += teams[i].team+" - "+teams[i].phone+"<br>"; }
+    list.innerHTML=t;
   }
 }
-[10/3/2026 5:22 PM] blackj pips: function registerTeam(){
-  var team = document.getElementById("regTeam").value.trim();
-  var phone = document.getElementById("regPhone").value.trim();
-  if(team=="" || phone==""){
-    alert("Please enter Team Name and Phone!");
-    return;
-  }
-  var contact = document.getElementById("regContact").value.trim();
-  var loc = document.getElementById("regLocation").value.trim();
-  var newTeam = {team:team, phone:phone, contact:contact, location:loc};
-  teams.push(newTeam);
+
+function registerTeam(){
+  var team = document.getElementById("regTeam").value;
+  var phone = document.getElementById("regPhone").value;
+  if(team=="" || phone==""){ alert("Enter Team Name and Phone"); return; }
+  var contact = document.getElementById("regContact").value;
+  var loc = document.getElementById("regLocation").value;
+[10/3/2026 5:32 PM] blackj pips: teams.push({team:team,phone:phone,contact:contact,location:loc});
   localStorage.setItem("teams810", JSON.stringify(teams));
-  showTeams();
-  var msg = "810 PIMVILLE NEW TEAM%0A%0ATeam: "+team+"%0AContact: "+contact+"%0APhone: "+phone+"%0ALocation: "+loc;
-  window.open("https://wa.me/27658936517?text="+msg, "_blank");
+  showCount();
+  alert("Registered! Total teams: "+teams.length);
+  var msg = "810 PIMVILLE NEW TEAM%0ATeam: "+team+"%0APhone: "+phone+"%0AContact: "+contact+"%0ALocation: "+loc;
+  window.open("https://wa.me/27658936517?text="+msg,"_blank");
   document.getElementById("regTeam").value="";
   document.getElementById("regPhone").value="";
   document.getElementById("regContact").value="";
   document.getElementById("regLocation").value="";
-  alert("✅ Registered! Teams now: "+teams.length+" - Message sent to Chairman WhatsApp!");
 }
 
 function chairmanLogin(){
@@ -113,11 +100,9 @@ function chairmanLogin(){
   if(p=="810Pimville2025"){
     document.getElementById("admin").style.display="block";
     localStorage.setItem("isChairman","yes");
-    showTeams();
-    alert("Welcome Chairman ✅ Admin opened!");
-  } else {
-    if(p!=null){ alert("Wrong password!"); }
-  }
+    showCount();
+    alert("Welcome Chairman!");
+  } else if(p!=null){ alert("Wrong password"); }
 }
 
 function chairmanLogout(){
@@ -135,14 +120,12 @@ function updateScore(){
   if(sa) document.getElementById("scoreA").innerText=sa;
   if(b) document.getElementById("teamB").innerText=b;
   if(sb) document.getElementById("scoreB").innerText=sb;
-  alert("Score Updated: "+a+" "+sa+" - "+sb+" "+b);
+  alert("Score saved!");
 }
 
-showTeams();
-if(localStorage.getItem("isChairman")=="yes"){
-  document.getElementById("admin").style.display="block";
-}
-console.log("810 Pimville FC Ready - Buttons attached");
+showCount();
+if(localStorage.getItem("isChairman")=="yes"){ document.getElementById("admin").style.display="block"; }
 </script>
+
 </body>
 </html>
