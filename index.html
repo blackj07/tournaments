@@ -80,7 +80,7 @@ document.getElementById('regForm').addEventListener('submit', function(e){
   let msg=⚽ NEW REGISTRATION - 810 PIMVILLE FC%0A%0ATeam: ${t}%0ACoach: ${c}%0APhone: ${p}%0ATournament: ${tour};
   window.open(https://wa.me/27658936517?text=${msg},'_blank');
 });
-</script>div id="admin" class="admin">
+
 <input id="inTeamA" placeholder="Team A">
 <input id="inScoreA" placeholder="Score A" type="number">
 <input id="inTeamB" placeholder="Team B">
@@ -88,18 +88,46 @@ document.getElementById('regForm').addEventListener('submit', function(e){
 <button class="btn" onclick="updateScore()">Save Score</button>
 </div>
 </div>
+</script>
 
+<!-- CHAIRMAN ONLY PANEL - HIDDEN -->
+<div id="admin" class="admin" style="display:none;">
+<div style="text-align:center; margin-bottom:10px;">
+<button class="btn" onclick="chairmanLogin()">🔐 Chairman Login</button>
+<button class="btn btn-dark" onclick="chairmanLogout()">Logout</button>
+</div>
 <script>
+<script>
+function chairmanLogin(){
+  let p = prompt("Enter Chairman Password:");
+  if(p === "810Pimville2025"){
+    document.getElementById("admin").style.display = "block";
+    localStorage.setItem("isChairman","yes");
+    alert("Welcome Chairman ✅");
+  } else {
+    alert("❌ Wrong password");
+  }
+}
+function chairmanLogout(){
+  localStorage.removeItem("isChairman");
+  document.getElementById("admin").style.display = "none";
+  alert("Logged out - Admin hidden");
+}
+window.addEventListener("load", function(){
+  if(localStorage.getItem("isChairman") === "yes"){
+    document.getElementById("admin").style.display = "block";
+  }
+});
 function updateScore(){
-let a=document.getElementById('inTeamA').value;
-let sa=document.getElementById('inScoreA').value;
-let b=document.getElementById('inTeamB').value;
-let sb=document.getElementById('inScoreB').value;
-if(a) document.getElementById('teamA').innerText=a;
-if(sa) document.getElementById('scoreA').innerText=sa;
-if(b) document.getElementById('teamB').innerText=b;
-if(sb) document.getElementById('scoreB').innerText=sb;
-alert('Score Updated!');
+  let a=document.getElementById('inTeamA').value;
+  let sa=document.getElementById('inScoreA').value;
+  let b=document.getElementById('inTeamB').value;
+  let sb=document.getElementById('inScoreB').value;
+  if(a) document.getElementById('teamA').innerText=a;
+  if(sa) document.getElementById('scoreA').innerText=sa;
+  if(b) document.getElementById('teamB').innerText=b;
+  if(sb) document.getElementById('scoreB').innerText=sb;
+  alert('Score Updated!');
 }
 </script>
 </body>
