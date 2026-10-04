@@ -3,177 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>810 Pimville - Tournament Poster Generator</title>
+<title>810 Pimville Poster Gen</title>
 <style>
-body{ background:#0a0a0a; color:white; font-family:Arial; text-align:center; padding:10px; }
-input,select{ width:90%; padding:12px; margin:8px; border-radius:8px; border:none; font-size:16px; }
-button{ background:#FFD700; color:#000; padding:15px 30px; font-weight:bold; border:none; border-radius:10px; font-size:18px; cursor:pointer; margin:10px; }
-#posterCanvas{ width:90%; max-width:400px; margin-top:15px; border:2px solid #FFD700; }
-.box{ background:#111; padding:15px; border-radius:15px; max-width:500px; margin:auto; }
+body{ background:#000; color:#fff; font-family:Arial; padding:10px; text-align:center; }
+.box{ background:#111; max-width:500px; margin:auto; padding:15px; border-radius:15px; border:1px solid #333; }
+select,input{ width:95%; padding:14px; margin:8px 0; border-radius:8px; border:none; font-size:16px; }
+button{ background:#FFD700; color:#000; padding:16px; width:95%; font-weight:bold; border:none; border-radius:10px; margin:10px 0; font-size:18px; }
+canvas{ width:100%; max-width:380px; margin-top:15px; border:2px solid #FFD700; border-radius:10px; }
 </style>
 </head>
 <body>
 <div class="box">
-<h2 style="color:#FFD700">810 PIMVILLE FC - Poster Generator</h2>
-<p>Module 8 - Final</p>
+<h2 style="color:#FFD700; margin:0">810 PIMVILLE FC</h2>
+<small>Option 1 - Small Logo Middle - WORKING</small><br><br>
 
-<select id="teamA">
-<option>Select Team A</option>
-<option>JOMO COSMOS</option>
-<option>810 Pimville FC</option>
-<option>Pimville All Stars</option>
-<option>Dube Continental</option>
-<option>Soweto Kings</option>
-<option>TEST FC</option>
-</select>
+<select id="teamA"><option>JOMO COSMOS</option><option>810 Pimville FC</option><option>Pimville All Stars</option><option>TEST FC</option><option>Dube Continental</option></select>
+<select id="teamB"><option>TEST FC</option><option>JOMO COSMOS</option><option>810 Pimville FC</option><option>Pimville All Stars</option></select>
+<input id="date" type="date" value="2026-10-05">
+<input id="venue" type="text" value="Pimville Ground • Soweto">
+<input id="prize" type="text" value="R5000 + Trophy">
 
-<select id="teamB">
-<option>Select Team B</option>
-<option>TEST FC</option>
-<option>JOMO COSMOS</option>
-<option>810 Pimville FC</option>
-<option>Pimville All Stars</option>
-<option>Dube Continental</option>
-</select>
-
-<input type="date" id="date" value="2026-10-05">
-<input type="text" id="venue" value="Pimville Ground • Soweto">
-<input type="text" id="prize" value="R5000 + Trophy">
-<input type="text" id="contact" value="065 893 6517">
-
-<button onclick="createPoster()">CREATE POSTER NOW</button>
-<button onclick="downloadPoster()" style="background:#00ff88">DOWNLOAD PNG</button>
-
-<br>
-<canvas id="posterCanvas" width="1080" height="1920"></canvas>
+<button onclick="makePoster()">CREATE POSTER NOW</button>
+<button onclick="download()" style="background:#00ff88">DOWNLOAD PNG - Send to Telegram</button>
+<canvas id="c" width="1080" height="1350"></canvas>
+<p id="status" style="color:#FFD700"></p>
 </div>
 
 <script>
-const canvas = document.getElementById("posterCanvas");
+const canvas = document.getElementById("c");
 const ctx = canvas.getContext("2d");
+function makePoster(){
+ document.getElementById("status").innerText = "Creating...";
+ const A = document.getElementById("teamA").value;
+ const B = document.getElementById("teamB").value;
+ const D = document.getElementById("date").value;
+ const V = document.getElementById("venue").value;
+ const P = document.getElementById("prize").value;
 
-function createPoster(){
-  const teamA = document.getElementById("teamA").value;
-  const teamB = document.getElementById("teamB").value;
-  const date = document.getElementById("date").value;
-  const venue = document.getElementById("venue").value;
-  const prize = document.getElementById("prize").value;
+ // bg
+ ctx.fillStyle = "#0a2e1a"; ctx.fillRect(0,0,1080,1350);
+ ctx.strokeStyle="#FFD700"; ctx.lineWidth=6; ctx.strokeRect(15,15,1050,1320);
+ ctx.lineWidth=2; ctx.strokeRect(35,35,1010,1280);
 
-  // Background - ZCC dark green
-  let grad = ctx.createLinearGradient(0,0,0,1920);
-  grad.addColorStop(0, "#02150a");
-  grad.addColorStop(0.5, "#0a3d1f");
-  grad.addColorStop(1, "#02150a");
-  ctx.fillStyle = grad;
-  ctx.fillRect(0,0,1080,1920);
-
-  // Stadium lights glow
-  ctx.fillStyle = "rgba(255,215,0,0.15)";
-  for(let i=0;i<20;i++){
-    ctx.beginPath();
-    ctx.arc(Math.random()*1080, Math.random()*600, 30+Math.random()*40, 0, Math.PI*2);
-    ctx.fill();
-  }
-
-  // Yellow border double
-  ctx.strokeStyle = "#FFD700";
-  ctx.lineWidth = 4;
-  ctx.strokeRect(30,30,1020,1860);
-  ctx.lineWidth = 2;
-  ctx.strokeRect(50,50,980,1820);
-
-  // Logo - load your real logo.png from GitHub
-  const logo = new Image();
-  logo.crossOrigin = "anonymous";
-  logo.src = "logo.png?v=" + Date.now(); // prevent cache
-
-  logo.onload = () => {
-    // draw logo centered top
-    ctx.drawImage(logo, 240, 80, 600, 600);
-
-    // MATCH DAY
-    ctx.fillStyle = "#FFD700";
-    ctx.font = "bold 60px Arial";
-    ctx.letterSpacing = "10px";
-    ctx.textAlign = "center";
-    ctx.fillText("MATCH DAY", 540, 800);
-
-    // Team A BIG WHITE
-    ctx.fillStyle = "white";
-    ctx.font = "bold 110px Arial";
-    ctx.textAlign = "center";
-    wrapText(teamA.toUpperCase(), 540, 950, 900, 110);
-
-    // VS small yellow
-    ctx.fillStyle = "#FFD700";
-    ctx.font = "bold 60px Arial";
-    ctx.fillText("VS", 540, 1130);
-
-    // Team B BIG WHITE
-    ctx.fillStyle = "white";
-    ctx.font = "bold 110px Arial";
-    ctx.fillText(teamB.toUpperCase(), 540, 1310);
-
-    // Info box
-    ctx.fillStyle = "rgba(0,30,15,0.9)";
-    ctx.fillRect(80, 1420, 920, 160);
-    ctx.strokeStyle = "#FFD700";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(80, 1420, 920, 160);
-    ctx.fillStyle = "white";
-    ctx.font = "bold 28px Arial";
-    ctx.textAlign = "left";
-    ctx.fillText("📅 " + date, 120, 1480);
-    ctx.fillText("📍 " + venue, 120, 1520);
-    ctx.fillText("🏆 " + prize, 120, 1560);
-
-    // Footer
-    ctx.fillStyle = "#FFD700";
-    ctx.font = "24px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText("810 Tournament • All teams welcome • Fair play", 540, 1670);
-    ctx.fillStyle = "white";
-    ctx.font = "20px Arial";
-    ctx.fillText("Contact: " + document.getElementById("contact").value + " • #810PIMVILLEFC", 540, 1710);
-    ctx.fillText("blackj07.github.io/tournaments", 540, 1740);
-  };
-
-  logo.onerror = () => {
-    alert("Logo not found! Make sure logo.png is in same folder on GitHub. Using placeholder for now.");
-    ctx.fillStyle = "white";
-    ctx.fillRect(240,80,600,600);
-  }
+ const logo = new Image();
+ logo.src = "./logo.png"; // FIXED PATH
+ logo.onload = function(){
+   ctx.drawImage(logo, 430, 50, 220, 220);
+   drawText(A,B,D,V,P);
+   document.getElementById("status").innerText = "Done! Now DOWNLOAD";
+ };
+ logo.onerror = function(){
+   // If logo fails, draw without logo so poster still works
+   ctx.fillStyle="#FFD700"; ctx.beginPath(); ctx.arc(540,160,90,0,Math.PI*2); ctx.fill();
+   ctx.fillStyle="#000"; ctx.font="bold 30px Arial"; ctx.textAlign="center"; ctx.fillText("810",540,170);
+   drawText(A,B,D,V,P);
+   document.getElementById("status").innerText = "Logo.png not found but poster created! Check file name";
+ };
 }
-
-function wrapText(text, x, y, maxWidth, lineHeight){
-  let words = text.split(" ");
-  let line = "";
-  let lines = [];
-  for(let n=0;n<words.length;n++){
-    let testLine = line + words[n] + " ";
-    let metrics = ctx.measureText(testLine);
-    if(metrics.width > maxWidth && n>0){
-      lines.push(line);
-      line = words[n] + " ";
-    } else {
-      line = testLine;
-    }
-  }
-  lines.push(line);
-  for(let i=0;i<lines.length;i++){
-    ctx.fillText(lines[i].trim(), x, y + (i*lineHeight));
-  }
+function drawText(A,B,D,V,P){
+  ctx.textAlign="center";
+  ctx.fillStyle="#FFD700"; ctx.font="bold 45px Arial"; ctx.fillText("MATCH DAY",540,360);
+  ctx.fillStyle="white"; ctx.font="bold 95px Arial"; ctx.fillText(A.toUpperCase(),540,500);
+  ctx.fillStyle="#FFD700"; ctx.font="bold 50px Arial"; ctx.fillText("VS",540,600);
+  ctx.fillStyle="white"; ctx.font="bold 95px Arial"; ctx.fillText(B.toUpperCase(),540,730);
+  ctx.fillStyle="rgba(0,0,0,0.6)"; ctx.fillRect(70,850,940,140);
+  ctx.strokeStyle="#FFD700"; ctx.strokeRect(70,850,940,140);
+  ctx.fillStyle="white"; ctx.font="24px Arial"; ctx.textAlign="left";
+  ctx.fillText("📅 Date: "+D,110,900);
+  ctx.fillText("📍 Venue: "+V,110,935);
+  ctx.fillText("🏆 Prize: "+P,110,970);
+  ctx.textAlign="center"; ctx.fillStyle="#FFD700"; ctx.font="18px Arial";
+  ctx.fillText("Contact: 065 893 6517 | blackj07.github.io/tournaments",540,1050);
 }
-
-function downloadPoster(){
-  const link = document.createElement("a");
-  link.download = "810-Poster-" + Date.now() + ".png";
-  link.href = canvas.toDataURL();
-  link.click();
+function download(){
+  const a=document.createElement("a"); a.download="810-Poster-"+Date.now()+".png"; a.href=canvas.toDataURL("image/png"); a.click();
 }
-
-// auto create on load
-window.onload = createPoster;
+window.onload=makePoster;
 </script>
 </body>
 </html>
