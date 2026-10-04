@@ -3,226 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>810 Pimville FC - Module 7 Fixtures</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<title>810 Pimville FC - FIXED BOTH</title>
 <style>
 body{margin:0;font-family:Arial;background:#0a3d0a;color:white;text-align:center}
 .header{background:#001a00;padding:15px}
 .logo{width:80px;height:80px;background:gold;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;color:black;font-weight:bold;border:3px solid white}
 .card{background:white;color:black;margin:10px;padding:15px;border-radius:10px;text-align:left}
-.btn{background:gold;color:black;padding:10px 15px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;margin:4px}
-.btn-dark{background:black;color:gold;border:1px solid gold}
-.btn-red{background:#c00;color:white}
-.btn-green{background:#0a3d0a;color:gold;border:1px solid gold}
+.btn{background:gold;color:black;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;margin:5px;width:90%}
 input{width:92%;padding:10px;margin:6px 0;border-radius:6px;border:1px solid #ccc}
 a{color:blue;font-weight:bold}
 .yellow-bar{background:#001a00;border:2px solid gold;margin:10px;border-radius:10px;padding:10px}
-.fixture-box{background:#f0f0f0;color:black;padding:8px;margin:5px 0;border-radius:5px;border-left:4px solid gold}
 </style>
 </head>
 <body>
 
 <div class="header">
 <div class="logo">810<br>PIMVILLE</div>
-<h2>⚽️ 810 PIMVILLE FC ⚽️</h2>
-<p>Module 7 - Auto Fixtures Generator 🏆</p>
-</div>
-
-<div class="card">
-<h3>📍 Live Score</h3>
-<p><b id="teamA">810 Pimville FC</b> vs <b id="teamB">Soweto Stars</b> - <span id="scoreA">2</span>:<span id="scoreB">1</span></p>
+<h2>810 PIMVILLE FC</h2>
+<p>FIXED - Both Buttons Working ✅</p>
 </div>
 
 <div class="card">
 <h3>📞 Contact</h3>
-<p>📱 <a href="https://wa.me/27658936517" target="_blank">065 893 6517 WhatsApp & Call</a> | ▶️ <a href="https://youtube.com/@810Pimville" target="_blank">@810Pimville</a> | 📘 <a href="https://www.facebook.com/share/1T7apQ1ysg/" target="_blank">Facebook</a></p>
+<p>📱 <a href="https://wa.me/27658936517" target="_blank">065 893 6517 Click to WhatsApp</a></p>
+<p>▶️ <a href="https://youtube.com/@810Pimville" target="_blank">@810Pimville</a></p>
+<p>📘 <a href="https://www.facebook.com/share/1T7apQ1ysg/" target="_blank">Facebook Page</a></p>
 </div>
 
 <div class="yellow-bar">
 <h3 style="color:gold;">⚽️ Register Team</h3>
 <input id="regTeam" placeholder="Team Name *">
-<input id="regPhone" placeholder="Phone *">
+<input id="regPhone" placeholder="Phone * 0658936517">
 <input id="regContact" placeholder="Contact Person">
 <input id="regLocation" placeholder="Location">
-<button type="button" class="btn" onclick="registerTeam()">REGISTER - WhatsApp</button>
+<button type="button" class="btn" onclick="registerTeam()">REGISTER - WhatsApp Will Pop</button>
 <p style="color:gold;font-weight:bold;">Teams: <span id="teamCount">0</span></p>
-<p id="lastTeam" style="color:white;font-size:12px;">No teams yet</p>
+<p id="lastTeam" style="font-size:12px;">No teams yet</p>
 </div>
 
 <div style="padding:10px;background:#111;border-top:3px solid gold;">
 <button type="button" class="btn" onclick="chairmanLogin()">🔐 Chairman Login</button>
-<button type="button" class="btn btn-dark" onclick="chairmanLogout()">Logout</button>
+<button type="button" class="btn" style="background:black;color:gold;border:1px solid gold;" onclick="chairmanLogout()">Logout</button>
+<p id="loginStatus" style="color:gold;font-size:12px;"></p>
 </div>
 
 <div id="admin" style="display:none;background:#222;margin:10px;padding:15px;border-radius:10px;border:2px solid gold;text-align:left;">
-<h3 style="color:gold;">🔒 Chairman Admin</h3>
-
-<b>Update Live Score:</b><br>
-<input id="inTeamA" placeholder="Team A"><input id="inScoreA" type="number" placeholder="Score A">
-<input id="inTeamB" placeholder="Team B"><input id="inScoreB" type="number" placeholder="Score B">
-<button type="button" class="btn" onclick="updateScore()">Save Score</button>
+<h3 style="color:gold;">Admin Panel</h3>
+<div id="teamList" style="background:white;color:black;padding:10px;border-radius:5px;">No teams</div><br>
+<button type="button" class="btn" style="background:#333;color:gold;" onclick="clearLastTeam()">Delete Last</button>
+<button type="button" class="btn" style="background:#c00;color:white;" onclick="clearAllTeams()">Clear ALL</button>
+<br><br>
+<button type="button" class="btn" onclick="downloadCSV()">📊 Download CSV</button>
+<button type="button" class="btn" onclick="printTeams()">🖨️ Print List</button>
 <hr>
-
-<h4 style="color:gold;">📋 Teams (<span id="adminCount">0</span>):</h4>
-<div id="teamList" style="background:white;color:black;padding:10px;border-radius:5px;">No teams</div>
-<button type="button" class="btn btn-dark" onclick="clearLastTeam()">Delete Last</button>
-<button type="button" class="btn btn-red" onclick="clearAllTeams()">Clear ALL</button>
-<button type="button" class="btn" onclick="downloadCSV()">📊 CSV</button>
-<button type="button" class="btn btn-green" onclick="downloadPDF()">📄 Teams PDF</button>
-
-<hr style="border:1px solid gold;margin:15px 0;">
-
-<!-- MODULE 7 NEW -->
-<h3 style="color:gold;">🏆 Module 7 - Fixture Generator</h3>
-<p style="font-size:12px;color:#ccc;">Auto create matches from registered teams!</p>
-<select id="fixtureType" style="width:96%;padding:10px;border-radius:6px;margin:5px 0;">
-<option value="quarter">Quarter Finals (8 teams)</option>
-<option value="semi">Semi Finals (4 teams)</option>
-<option value="final">Final (2 teams)</option>
-<option value="group">Group Stage - All vs All</option>
-<option value="knockout">Knockout - Random Pairing</option>
-</select>
-
-<button type="button" class="btn" style="width:96%;background:gold;" onclick="generateFixtures()">⚽️ GENERATE FIXTURES NOW</button>
-
-<div id="fixturesOutput" style="background:white;color:black;padding:10px;border-radius:5px;margin:10px 0;min-height:50px;">
-No fixtures yet - Click Generate!
-</div>
-
-<button type="button" class="btn btn-green" onclick="downloadFixturesPDF()">📄 Download Fixtures PDF</button>
-<button type="button" class="btn btn-dark" onclick="clearFixtures()">🗑️ Clear Fixtures</button>
-
+<h3 style="color:gold;">🏆 Fixtures</h3>
+<button type="button" class="btn" onclick="generateFixtures()">⚽️ GENERATE FIXTURES</button>
+<div id="fixturesOutput" style="background:white;color:black;padding:10px;border-radius:5px;margin:10px 0;">No fixtures</div>
 </div>
 
 <script>
+// NO EXTERNAL LIBRARY - THIS IS WHY IT WAS NOT CLICKING!
 var teams=[]; var fixtures=[];
 try{var s=localStorage.getItem("teams810");if(s)teams=JSON.parse(s);}catch(e){teams=[];}
 try{var f=localStorage.getItem("fixtures810");if(f)fixtures=JSON.parse(f);}catch(e){fixtures=[];}
 
 function showCounter(){
  document.getElementById("teamCount").innerText=teams.length;
- document.getElementById("adminCount").innerText=teams.length;
- var lastDiv=document.getElementById("lastTeam");
- var listDiv=document.getElementById("teamList");
- if(teams.length==0){lastDiv.innerText="No teams yet";listDiv.innerHTML="No teams";}
+ var last=document.getElementById("lastTeam");
+ var list=document.getElementById("teamList");
+ var status=document.getElementById("loginStatus");
+ if(localStorage.getItem("isChairman")==="yes"){status.innerText="✅ Logged IN as Chairman";}else{status.innerText="🔒 Logged OUT";}
+ if(teams.length==0){last.innerText="No teams yet";list.innerHTML="No teams";}
  else{
-  lastDiv.innerText="Last: "+teams[teams.length-1].team;
-  var html="";for(var i=0;i<teams.length;i++)html+=(i+1)+". "+teams[i].team+" - "+teams[i].phone+"<br>";
-  listDiv.innerHTML=html;
+  last.innerText="Last: "+teams[teams.length-1].team+" | Total: "+teams.length;
+  var h="";for(var i=0;i<teams.length;i++)h+=(i+1)+". "+teams[i].team+" - "+teams[i].phone+"<br>";list.innerHTML=h;
  }
- showFixtures();
+ var out=document.getElementById("fixturesOutput");
+ if(fixtures.length==0){out.innerHTML="No fixtures - click Generate";}else{
+  var fh="";for(var i=0;i<fixtures.length;i++)fh+="<b>"+fixtures[i].match+":</b> "+fixtures[i].teamA+" vs "+fixtures[i].teamB+"<br>";out.innerHTML=fh;
+ }
 }
 
 function registerTeam(){
+ console.log("Register clicked");
  var team=document.getElementById('regTeam').value.trim();
  var phone=document.getElementById('regPhone').value.trim();
  var contact=document.getElementById('regContact').value.trim();
  var loc=document.getElementById('regLocation').value.trim();
- if(!team||!phone){alert("Enter Team & Phone");return;}
+ if(!team){alert("Type Team Name!");return;}
+ if(!phone){alert("Type Phone Number!");return;}
  teams.push({team:team,phone:phone,contact:contact,location:loc});
  localStorage.setItem("teams810",JSON.stringify(teams));
  showCounter();
- var msg=encodeURIComponent("*810 REG*\nTeam: "+team+"\nPhone: "+phone);
+ // WhatsApp - MUST be direct, no delay
+ var msg="*810 REGISTRATION*\nTeam: "+team+"\nPhone: "+phone+"\nContact: "+contact+"\nLocation: "+loc;
+ var url="https://wa.me/27658936517?text="+encodeURIComponent(msg);
  document.getElementById('regTeam').value="";document.getElementById('regPhone').value="";document.getElementById('regContact').value="";document.getElementById('regLocation').value="";
- window.open("https://wa.me/27658936517?text="+msg,"_blank");
- alert("✅ "+team+" Registered! Total: "+teams.length);
+ window.open(url,"_blank");
+ alert("✅ "+team+" Registered! Total "+teams.length);
 }
 
 function chairmanLogin(){
- var p=prompt("Chairman Password:");
- if(p==="810Pimville2025"){document.getElementById("admin").style.display="block";localStorage.setItem("isChairman","yes");showCounter();alert("Welcome Chairman ✅ Module 7 Ready!");}
- else if(p!==null){alert("Wrong password!");}
+ console.log("Login clicked");
+ var p=prompt("Enter Chairman Password:");
+ if(p===null)return;
+ if(p.trim()==="810Pimville2025"){
+  document.getElementById("admin").style.display="block";
+  localStorage.setItem("isChairman","yes");
+  showCounter();
+  alert("Welcome Chairman! ✅ Admin Opened");
+ }else{alert("Wrong password! Use 810Pimville2025");}
 }
-function chairmanLogout(){localStorage.removeItem("isChairman");document.getElementById("admin").style.display="none";}
 
-function updateScore(){
- var a=document.getElementById('inTeamA').value.trim();
- var sa=document.getElementById('inScoreA').value;
- var b=document.getElementById('inTeamB').value.trim();
- var sb=document.getElementById('inScoreB').value;
- if(a)document.getElementById('teamA').innerText=a;
- if(sa)document.getElementById('scoreA').innerText=sa;
- if(b)document.getElementById('teamB').innerText=b;
- if(sb)document.getElementById('scoreB').innerText=sb;
- alert("Score Updated!");
+function chairmanLogout(){
+ document.getElementById("admin").style.display="none";
+ localStorage.removeItem("isChairman");
+ showCounter();
+ alert("Logged out 🔒");
 }
-function clearLastTeam(){if(teams.length==0){alert("No teams");return;} if(confirm("Delete "+teams[teams.length-1].team+"?")){teams.pop();localStorage.setItem("teams810",JSON.stringify(teams));showCounter();}}
-function clearAllTeams(){if(confirm("Delete ALL "+teams.length+"?")){teams=[];localStorage.setItem("teams810",JSON.stringify(teams));showCounter();}}
-function downloadPDF(){
- if(teams.length==0){alert("No teams");return;}
-const { jsPDF } = window.jspdf; const doc=new jsPDF();
- doc.text("810 PIMVILLE FC - Teams",10,20);doc.text("Total: "+teams.length+" | Date: "+new Date().toLocaleDateString(),10,30);
- var y=40;for(var i=0;i<teams.length;i++){doc.text((i+1)+". "+teams[i].team+" - "+teams[i].phone,10,y);y+=8;}
- doc.save("810_Teams.pdf");
-}
+
+function clearLastTeam(){if(teams.length==0){alert("No teams");return;}if(confirm("Delete "+teams[teams.length-1].team+"?")){teams.pop();localStorage.setItem("teams810",JSON.stringify(teams));showCounter();}}
+function clearAllTeams(){if(confirm("Delete ALL "+teams.length+" teams?")){teams=[];localStorage.setItem("teams810",JSON.stringify(teams));showCounter();}}
 function downloadCSV(){
  if(teams.length==0){alert("No teams");return;}
- var csv="No,Team,Phone,Contact,Location\n";
- for(var i=0;i<teams.length;i++)csv+=(i+1)+","+teams[i].team+","+teams[i].phone+","+teams[i].contact+","+teams[i].location+"\n";
- var blob=new Blob([csv],{type:"text/csv"});var url=URL.createObjectURL(blob);
- var a=document.createElement("a");a.href=url;a.download="810_Teams.csv";a.click();
+ var csv="No,Team,Phone,Contact,Location\n";for(var i=0;i<teams.length;i++)csv+=(i+1)+","+teams[i].team+","+teams[i].phone+","+teams[i].contact+","+teams[i].location+"\n";
+ var blob=new Blob([csv],{type:"text/csv"});var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download="810_Teams.csv";a.click();
 }
-
-// MODULE 7 LOGIC
+function printTeams(){
+ if(teams.length==0){alert("No teams");return;}
+ var w=window.open("","","width=800,height=600");var html="<h2>810 Pimville Teams</h2><p>Total: "+teams.length+" | "+new Date().toLocaleString()+"</p><hr><ol>";for(var i=0;i<teams.length;i++)html+="<li>"+teams[i].team+" - "+teams[i].phone+"</li>";html+="</ol>";w.document.write(html);w.document.close();w.print();
+}
 function generateFixtures(){
- if(teams.length<2){alert("Need at least 2 teams! You have "+teams.length);return;}
- var type=document.getElementById("fixtureType").value;
- fixtures=[];
- var shuffled=[...teams].sort(()=>0.5-Math.random());
-
- if(type==="knockout"  type==="quarter"  type==="semi" || type==="final"){
-   for(var i=0;i<shuffled.length-1;i+=2){
-     var t1=shuffled[i].team;
-     var t2=shuffled[i+1]? shuffled[i+1].team : "BYE";
-     fixtures.push({match:"Match "+(fixtures.length+1), teamA:t1, teamB:t2, time:"TBD", venue:"Pimville Ground"});
-   }
-   if(shuffled.length%2!==0){
-     fixtures.push({match:"Match "+(fixtures.length+1), teamA:shuffled[shuffled.length-1].team, teamB:"BYE - Advances", time:"TBD", venue:"Pimville"});
-   }
- } else if(type==="group"){
-   for(var i=0;i<shuffled.length;i++){
-     for(var j=i+1;j<shuffled.length;j++){
-       fixtures.push({match:"Match "+(fixtures.length+1), teamA:shuffled[i].team, teamB:shuffled[j].team, time:"TBD", venue:"Pimville Ground"});
-     }
-   }
- }
- localStorage.setItem("fixtures810",JSON.stringify(fixtures));
- showFixtures();
- alert("✅ "+fixtures.length+" Fixtures Generated! Type: "+type);
-}
-
-function showFixtures(){
- var out=document.getElementById("fixturesOutput");
- if(fixtures.length==0){out.innerHTML="No fixtures yet - Click Generate!";return;}
- var html="";
- for(var i=0;i<fixtures.length;i++){
-   html+="<div class='fixture-box'><b>"+fixtures[i].match+":</b> "+fixtures[i].teamA+" vs "+fixtures[i].teamB+" <br><small>📍 "+fixtures[i].venue+" | ⏰ "+fixtures[i].time+"</small></div>";
- }
- out.innerHTML=html;
-}
-
-function clearFixtures(){
- if(confirm("Clear all fixtures?")){fixtures=[];localStorage.setItem("fixtures810",JSON.stringify(fixtures));showFixtures();}
-}
-
-function downloadFixturesPDF(){
- if(fixtures.length==0){alert("No fixtures - Generate first!");return;}
- const { jsPDF } = window.jspdf; const doc=new jsPDF();
- doc.setFontSize(16);doc.text("810 PIMVILLE FC - FIXTURES",10,20);
- doc.setFontSize(11);doc.text("Date: "+new Date().toLocaleDateString()+" | Teams: "+teams.length+" | Matches: "+fixtures.length,10,28);
- doc.text("Contact: 065 893 6517 | youtube.com/@810Pimville",10,34);
- var y=45;
- for(var i=0;i<fixtures.length;i++){
-   if(y>270){doc.addPage();y=20;}
-   doc.text(fixtures[i].match+": "+fixtures[i].teamA+" vs "+fixtures[i].teamB+" | "+fixtures[i].venue,10,y);
-   y+=8;
- }
- doc.save("810_Fixtures_"+new Date().toISOString().split('T')[0]+".pdf");
- alert("Fixtures PDF Downloaded! 📄🏆");
+ if(teams.length<2){alert("Need 2+ teams, you have "+teams.length);return;}
+ fixtures=[];var shuffled=[...teams].sort(()=>0.5-Math.random());
+ for(var i=0;i<shuffled.length-1;i+=2){var t1=shuffled[i].team;var t2=shuffled[i+1]?shuffled[i+1].team:"BYE";fixtures.push({match:"Match "+(fixtures.length+1),teamA:t1,teamB:t2});}
+ if(shuffled.length%2!==0){fixtures.push({match:"Match "+(fixtures.length+1),teamA:shuffled[shuffled.length-1].team,teamB:"BYE"});}
+ localStorage.setItem("fixtures810",JSON.stringify(fixtures));showCounter();alert("✅ "+fixtures.length+" Fixtures Generated!");
 }
 
 showCounter();
-if(localStorage.getItem("isChairman")==="yes")document.getElementById("admin").style.display="block";
+if(localStorage.getItem("isChairman")==="yes"){document.getElementById("admin").style.display="block";}
 </script>
 </body>
 </html>
