@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>810 Pimville FC - Official Tournaments - SECURED</title>
+<title>810 Pimville FC - Module 6 PDF Ready</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 body{margin:0;font-family:Arial;background:#0a3d0a;color:white;text-align:center}
 .header{background:#001a00;padding:15px}
@@ -12,6 +13,7 @@ body{margin:0;font-family:Arial;background:#0a3d0a;color:white;text-align:center
 .btn{background:gold;color:black;padding:12px 18px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;margin:5px}
 .btn-dark{background:black;color:gold;border:1px solid gold}
 .btn-red{background:#c00;color:white;border:1px solid white}
+.btn-green{background:#0a3d0a;color:gold;border:1px solid gold}
 input{width:92%;padding:10px;margin:6px 0;border-radius:6px;border:1px solid #ccc}
 a{color:blue;font-weight:bold;text-decoration:none}
 .yellow-bar{background:#001a00;border:2px solid gold;margin:10px;border-radius:10px;padding:10px}
@@ -22,7 +24,7 @@ a{color:blue;font-weight:bold;text-decoration:none}
 <div class="header">
 <div class="logo">810<br>PIMVILLE<br>FC</div>
 <h2>⚽️ 810 PIMVILLE FC ⚽️</h2>
-<p>Official Tournaments - Teka Pase - Soweto | SECURED 🔒</p>
+<p>Official Tournaments - Module 6 PDF Ready 🔒📄</p>
 </div>
 
 <div class="card">
@@ -32,17 +34,11 @@ a{color:blue;font-weight:bold;text-decoration:none}
 </div>
 
 <div class="card">
-<h3>🏆 Tournaments Hosted by 810 Pimville FC</h3>
-<p>Pimville Youth Cup | 810 Pimville Cup</p>
-</div>
-
-<div class="card">
 <h3>📞 Contact - Click to Connect</h3>
 <p>📱 WhatsApp & Call: <a href="https://wa.me/27658936517" target="_blank">065 893 6517 - Click Here</a></p>
 <p>▶️ YouTube: <a href="https://youtube.com/@810Pimville" target="_blank">@810Pimville - Click to Watch</a></p>
 <p>📘 Facebook: <a href="https://www.facebook.com/share/1T7apQ1ysg/" target="_blank">810 Pimville FC - Click to Follow</a></p>
-<p>✉️ Email: <a href="mailto:810pimville@gmail.com">810pimville@gmail.com - Click to Email</a></p>
-<p>📞 Call: <a href="tel:+27658936517">0658936517 - Click to Call</a></p>
+<p>✉️ Email: <a href="mailto:810pimville@gmail.com">810pimville@gmail.com</a></p>
 </div>
 
 <div class="yellow-bar">
@@ -51,7 +47,7 @@ a{color:blue;font-weight:bold;text-decoration:none}
 <input id="regContact" placeholder="Contact Person" maxlength="30">
 <input id="regPhone" placeholder="Phone Number * (10 digits)" maxlength="15">
 <input id="regLocation" placeholder="Team Location" maxlength="30">
-<button type="button" class="btn" onclick="registerTeam()" style="width:96%;">REGISTER - Message on WhatsApp</button>
+<button type="button" class="btn" onclick="registerTeam(event)" style="width:96%;">REGISTER - Message on WhatsApp</button>
 <p style="color:gold;text-align:center;margin:10px 0 0 0;font-weight:bold;">Teams Registered: <span id="teamCount">0</span> ⚽️</p>
 <p id="lastTeam" style="color:white;text-align:center;font-size:13px;margin:5px;">No teams yet</p>
 </div>
@@ -74,15 +70,23 @@ Score B: <input id="inScoreB" type="number" max="20" placeholder="Score B"><br>
 <h4 style="color:gold;margin:5px 0;">📋 Registered Teams List:</h4>
 <div id="teamList" style="background:white;color:black;padding:10px;border-radius:5px;min-height:40px;">No teams yet</div>
 <div style="margin-top:10px;text-align:center;">
-<button type="button" class="btn btn-dark" onclick="clearLastTeam()">🗑 Delete Last Wrong Entry</button>
-<button type="button" class="btn btn-red" onclick="clearAllTeams()">❌ Clear ALL Teams</button>
+<button type="button" class="btn btn-dark" onclick="clearLastTeam()">🗑 Delete Last</button>
+<button type="button" class="btn btn-red" onclick="clearAllTeams()">❌ Clear ALL</button>
 </div>
-<p style="font-size:11px;color:#aaa;text-align:center;">Secured: Blocks < > hack attempts</p>
+
+<!-- MODULE 6 NEW BUTTONS -->
+<div style="margin-top:15px;border-top:2px dashed gold;padding-top:10px;text-align:center;">
+<h4 style="color:gold;margin:5px 0;">📄 Module 6 - Chairman Reports:</h4>
+<button type="button" class="btn btn-green" onclick="downloadPDF()">📄 Download PDF for Referee</button>
+<button type="button" class="btn" onclick="downloadCSV()">📊 Download Excel (CSV)</button>
+<button type="button" class="btn btn-dark" onclick="printTeams()">🖨️ Print Teams List</button>
+<p style="font-size:11px;color:#aaa;">PDF includes date, count, all teams + phones - ready for tournament!</p>
+</div>
+
 </div>
 </div>
 
 <script>
-// SECURED MODULE 5
 var teams=[];
 try{var s=localStorage.getItem("teams810");if(s)teams=JSON.parse(s);}catch(e){teams=[];}
 
@@ -108,44 +112,32 @@ function showCounter(){
  }
 }
 
-function registerTeam(){
+function registerTeam(e){
  let teamEl=document.getElementById('regTeam');
  let phoneEl=document.getElementById('regPhone');
  let contactEl=document.getElementById('regContact');
  let locEl=document.getElementById('regLocation');
- 
  let team=sanitize(teamEl.value);
  let phone=sanitize(phoneEl.value);
- 
  if(!team||!phone){alert("Please enter Team Name and Phone");return;}
  if(team.length < 3){alert("Team name must be 3+ letters");return;}
- if(phone.length < 10){alert("Phone must be 10 digits - use 0658936517 format");return;}
- 
+ if(phone.length < 10){alert("Phone must be 10 digits");return;}
  let contact=sanitize(contactEl.value);
  let loc=sanitize(locEl.value);
-
- // Prevent double click
- let btn = event.target;
+ let btn = e.target;
  btn.disabled = true;
  btn.innerText = "Sending...";
-
  teams.push({team:team,phone:phone,contact:contact,location:loc});
  localStorage.setItem("teams810",JSON.stringify(teams));
  showCounter();
-
- // FIXED WHATSAPP - with encode
  let rawMsg="*810 PIMVILLE REGISTRATION*\n\nTeam: "+team+"\nContact: "+contact+"\nPhone: "+phone+"\nLocation: "+loc;
  let finalMsg = encodeURIComponent(rawMsg);
- 
- // Clear FIRST, then open WhatsApp
  teamEl.value=""; contactEl.value=""; phoneEl.value=""; locEl.value="";
- 
  window.open("https://wa.me/27658936517?text="+finalMsg,"_blank");
- 
  setTimeout(function(){
    btn.disabled = false;
    btn.innerText = "REGISTER - Message on WhatsApp";
-   alert("✅ Team "+team+" Registered! Total: "+teams.length+"\n\nNow you can add next team - form cleared!");
+   alert("✅ Team "+team+" Registered! Total: "+teams.length);
  }, 500);
 }
 
@@ -156,7 +148,7 @@ function chairmanLogin(){
   localStorage.setItem("isChairman","yes");
   localStorage.setItem("loginTime", Date.now().toString());
   showCounter();
-  alert("Welcome Chairman ✅ Secured 30min session");
+  alert("Welcome Chairman ✅ Module 6 Ready - Download PDF!");
  }else if(p!==null){alert("❌ Wrong password!");}
 }
 
@@ -164,7 +156,7 @@ function chairmanLogout(){
  localStorage.removeItem("isChairman");
  localStorage.removeItem("loginTime");
  document.getElementById("admin").style.display="none";
- alert("Logged out - Secured");
+ alert("Logged out");
 }
 
 function updateScore(){
@@ -176,9 +168,8 @@ function updateScore(){
  if(sa && sa<=20)document.getElementById('scoreA').innerText=sa;
  if(b)document.getElementById('teamB').innerText=b;
  if(sb && sb<=20)document.getElementById('scoreB').innerText=sb;
- alert("Score Updated! Secured ✅");
+ alert("Score Updated! ✅");
 }
-
 function clearLastTeam(){
  if(teams.length==0){alert("No teams to delete");return;}
  if(confirm("Delete last team: "+teams[teams.length-1].team+"?")){
@@ -190,13 +181,59 @@ function clearLastTeam(){
 }
 
 function clearAllTeams(){
- if(confirm("Chairman, DELETE ALL "+teams.length+" teams? Counter will be 0")){
+ if(confirm("Chairman, DELETE ALL "+teams.length+" teams?")){
   teams=[];
   localStorage.setItem("teams810",JSON.stringify(teams));
   showCounter();
-  alert("All cleared! Now 0 teams - fresh start!");
+  alert("All cleared! Now 0 teams");
  }
 }
+
+// MODULE 6 FUNCTIONS
+function downloadPDF(){
+ if(teams.length==0){alert("No teams to download - register first!");return;}
+ const { jsPDF } = window.jspdf;
+ const doc = new jsPDF();
+ doc.setFontSize(18);
+ doc.text("810 PIMVILLE FC - Tournament Teams", 10, 20);
+ doc.setFontSize(12);
+ doc.text("Date: "+new Date().toLocaleDateString(), 10, 30);
+ doc.text("Total Teams: "+teams.length, 10, 36);
+ doc.text("Contact: 065 893 6517 | 810pimville@gmail.com", 10, 42);
+ doc.line(10,45,200,45);
+ let y=55;
+ for(let i=0;i<teams.length;i++){
+   if(y>270){doc.addPage(); y=20;}
+   doc.text((i+1)+". "+teams[i].team+" - "+teams[i].phone+" | "+(teams[i].contact"")+" | "+(teams[i].location""), 10, y);
+   y+=8;
+ }
+ doc.save("810_Pimville_Teams_"+new Date().toISOString().split('T')[0]+".pdf");
+ alert("PDF Downloaded! 📄✅ Check your Downloads folder");
+}
+
+function downloadCSV(){
+ if(teams.length==0){alert("No teams to download");return;}
+ let csv="No,Team Name,Contact Person,Phone,Location\n";
+ for(let i=0;i<teams.length;i++){
+   csv+=(i+1)+","+teams[i].team+","+teams[i].contact+","+teams[i].phone+","+teams[i].location+"\n";
+ }
+ let blob=new Blob([csv],{type:"text/csv"});
+ let url=URL.createObjectURL(blob);
+ let a=document.createElement("a");
+ a.href=url; a.download="810_Pimville_Teams.csv";
+ a.click();
+ alert("Excel CSV Downloaded! 📊✅");
+}
+
+function printTeams(){
+ if(teams.length==0){alert("No teams to print");return;}
+ let w=window.open("","","width=800,height=600");
+ let html="<h2>810 Pimville FC - Teams List</h2><p>Date: "+new Date().toLocaleString()+" | Total: "+teams.length+"</p><hr><ol>";
+ for(let i=0;i<teams.length;i++){html+="<li><b>"+teams[i].team+"</b> - "+teams[i].phone+" ("+teams[i].contact+" - "+teams[i].location+")</li>";}
+ html+="</ol><hr><p>Contact: 0658936517 | 810pimville@gmail.com</p>";
+ w.document.write(html); w.document.close(); w.print();
+}
+
 document.addEventListener("DOMContentLoaded", function(){
  document.getElementById("loginBtn").addEventListener("click", chairmanLogin);
  document.getElementById("logoutBtn").addEventListener("click", chairmanLogout);
@@ -209,7 +246,6 @@ document.addEventListener("DOMContentLoaded", function(){
    }
  }
  showCounter();
- console.log("810 FC SECURED Module 5 loaded");
 });
 </script>
 </body>
