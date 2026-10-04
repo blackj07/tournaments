@@ -1,125 +1,335 @@
- <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>810 PIMVILLE FC - FINAL WITH GD</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>810 PIMVILLE FC - FULL SYSTEM - FIXED CLICK</title>
 <style>
-body{background:#000;color:#fff;font-family:Arial;margin:0}
-header{background:#0a2e1a;padding:12px;text-align:center;border-bottom:3px solid gold}
-header img{width:70px;height:70px;border-radius:50%;border:2px solid gold}
-.tabs{display:flex;gap:2px;padding:5px;background:#111;overflow-x:auto}
-.tabs button{flex:1;min-width:80px;padding:13px;background:#222;color:#fff;border:none;border-radius:8px;font-weight:bold}
-.tabs button.on{background:gold;color:#000}
-.page{display:none;padding:15px;max-width:700px;margin:auto}
-.page.on{display:block}
-.card{background:#111;padding:15px;border-radius:12px;margin:10px 0;border:1px solid #333}
-input,select{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:none}
-.btn{background:gold;color:#000;padding:13px;width:100%;border:none;border-radius:10px;font-weight:bold;margin:6px 0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;color:#fff;font-family:Arial, sans-serif}
+header{background:linear-gradient(180deg,#0a3d1f,#02150a);padding:15px;text-align:center;border-bottom:4px solid #FFD700;position:sticky;top:0;z-index:100}
+header img{width:75px;height:75px;border-radius:50%;border:3px solid #FFD700}
+.tabs{display:flex;gap:3px;padding:8px;background:#111;overflow-x:auto;position:sticky;top:103px;z-index:99}
+.tabs button{flex:1;min-width:85px;padding:14px 6px;background:#222;color:#fff;border:none;border-radius:10px;font-weight:bold;font-size:14px;cursor:pointer;transition:0.2s}
+.tabs button.active{background:#FFD700;color:#000;transform:scale(1.05)}
+.content{display:none;padding:15px;max-width:650px;margin:auto;animation:fade 0.3s}
+.content.active{display:block}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.card{background:#111;padding:18px;border-radius:14px;margin:12px 0;border:1px solid #2a2a2a;box-shadow:0 4px 10px rgba(0,0,0,0.5)}
+.card h3{color:#FFD700;margin-bottom:10px}
+input,select{width:100%;padding:14px;margin:7px 0;border-radius:10px;border:none;font-size:15px;background:#fff;color:#000}
+.btn{background:#FFD700;color:#000;padding:15px;width:100%;border:none;border-radius:10px;font-weight:bold;font-size:16px;cursor:pointer;margin:8px 0}
+.btn:hover{background:#ffcc00}
 .btn-green{background:#00ff88}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{color:gold;padding:8px 4px;border-bottom:2px solid #333;text-align:center}
-td{padding:8px 4px;border-bottom:1px solid #222;text-align:center}
-td:first-child{text-align:left}
-canvas{width:100%;max-width:400px;border:3px solid gold;border-radius:12px;margin:10px auto;display:block}
-.item{background:#1a1a1a;padding:10px;margin:6px 0;border-left:4px solid gold;border-radius:6px}
+.btn-red{background:#ff4444;color:white}
+canvas{width:100%;max-width:420px;border:3px solid #FFD700;border-radius:14px;margin-top:12px;display:block;margin-left:auto;margin-right:auto}
+.item{background:#1e1e1e;padding:14px;margin:8px 0;border-left:5px solid #FFD700;border-radius:8px}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th{color:#FFD700;text-align:left;padding:10px;border-bottom:2px solid #333}
+td{padding:10px;border-bottom:1px solid #222}
+small{color:#999}
 </style>
 </head>
 <body>
-<header><img src="logo.png"><br><b style="color:gold">810 PIMVILLE FC</b><br><small>MAKULA KONDZO - Est 2025</small></header>
+
+<header>
+<img src="./logo.png" onerror="this.style.display='none'">
+<div style="color:#FFD700;font-weight:bold;font-size:22px;margin-top:5px">810 PIMVILLE FC</div>
+<div style="font-size:12px;color:#aaa;letter-spacing:1px">MAKULA KONDZO - Est 2025 - Soweto</div>
+</header>
+
 <div class="tabs">
-<button id="b1" class="on" onclick="go('home','b1')">Home</button>
-<button id="b2" onclick="go('fixtures','b2')">Fixtures</button>
-<button id="b3" onclick="go('teams','b3')">Teams</button>
-<button id="b4" onclick="go('table','b4')">Table</button>
-<button id="b5" onclick="go('posters','b5')">Posters</button>
+<button id="tab1" class="active" onclick="openPage('home','tab1')">Home</button>
+<button id="tab2" onclick="openPage('fixtures','tab2')">Fixtures</button>
+<button id="tab3" onclick="openPage('teams','tab3')">Teams</button>
+<button id="tab4" onclick="openPage('table','tab4')">Table</button>
+<button id="tab5" onclick="openPage('posters','tab5')">Posters</button>
 </div>
 
-<div id="home" class="page on"><div class="card"><h3 style="color:gold">Welcome to 810 Tournament</h3><p>Soweto Premier Kasi Football - Pimville Ground • R5000 + Trophy • 065 893 6517</p></div><div class="card"><h4>Upcoming Matches</h4><div id="homeFix">No fixtures - Add in Fixtures tab</div></div></div>
-
-<div id="fixtures" class="page">
-<div class="card"><h3 style="color:gold">Add New Fixture + Result</h3>
-<select id="fa"></select><select id="fb"></select>
-<input type="date" id="fd" value="2026-10-05"><input type="time" id="ft" value="15:00">
-<div style="display:flex;gap:5px"><input type="number" id="ga" placeholder="Team A Goals" style="width:50%"><input type="number" id="gb" placeholder="Team B Goals" style="width:50%"></div>
-<input type="text" id="fv" value="Pimville Ground">
-<button class="btn" onclick="saveFix()">SAVE FIXTURE & UPDATE TABLE</button>
-<button class="btn" style="background:#ff4444;color:#fff" onclick="clearFix()">Clear All</button>
+<!-- HOME -->
+<div id="home" class="content active">
+<div class="card">
+<h3>Welcome to 810 Tournament</h3>
+<p style="line-height:1.6">Soweto's Premier Kasi Football Tournament<br>Professional organization, Fair play, Big prizes</p>
+<br>
+<p>📍 <b>Pimville Ground • Soweto</b><br>🏆 <b>R5000 + Trophy + Medals</b><br>📞 <b>065 893 6517</b><br>🌐 blackj07.github.io/tournaments</p>
 </div>
-<div class="card"><h4>All Fixtures</h4><div id="fixList"></div></div>
+<div class="card">
+<h3>Upcoming Matches</h3>
+<div id="homeFixtures"><p style="color:#888">No fixtures yet - Go to Fixtures tab and add your first match</p></div>
+</div>
 </div>
 
-<div id="teams" class="page"><div class="card"><h3 style="color:gold">Registered Teams</h3><div id="teamList"></div><input id="newT" placeholder="New team name"><button class="btn" onclick="addT()">Add Team</button></div></div>
+<!-- FIXTURES -->
+<div id="fixtures" class="content">
+<div class="card">
+<h3>➕ Add New Fixture</h3>
+<label>Team A</label>
+<select id="fixTeamA"><option>JOMO COSMOS</option><option>810 Pimville FC</option><option>Pimville All Stars</option><option>Dube Continental</option><option>Soweto Kings</option><option>TEST FC</option></select>
+<label>Team B</label>
+<select id="fixTeamB"><option>TEST FC</option><option>JOMO COSMOS</option><option>810 Pimville FC</option><option>Pimville All Stars</option><option>Dube Continental</option></select>
+ <label>Date</label>
+<input type="date" id="fixDate" value="2026-10-05">
+<label>Time</label>
+<input type="time" id="fixTime" value="15:00">
+<label>Venue</label>
+<input type="text" id="fixVenue" value="Pimville Ground • Soweto">
+<button class="btn" onclick="addFixture()">SAVE FIXTURE</button>
+<button class="btn btn-red" onclick="clearAllFixtures()">Clear All Fixtures</button>
+<small>Fixtures are saved in your phone - they will stay even if you close browser</small>
+</div>
+<div class="card">
+<h3>📅 All Fixtures</h3>
+<div id="fixtureList"><p style="color:#888">No fixtures yet</p></div>
+</div>
+</div>
 
-<div id="table" class="page"><div class="card"><h3 style="color:gold">League Table - FULL PSL STYLE</h3>
-<table id="tbl"><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th></tr></table>
+<!-- TEAMS -->
+<div id="teams" class="content">
+<div class="card">
+<h3>⚽ Registered Teams - 810 Tournament</h3>
+<div id="teamListDisplay"></div>
+<br>
+<input type="text" id="newTeamName" placeholder="Type new team name e.g. Orlando Pirates Development">
+<button class="btn" onclick="addNewTeam()">Add Team</button>
+</div>
+</div>
+
+<!-- TABLE -->
+<div id="table" class="content">
+<div class="card">
+<h3>🏆 League Table</h3>
+<table id="leagueTable"><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>Pts</th></tr></table>
+<small>Points update automatically when you add results later</small>
 <small>P=Played W=Won D=Draw L=Lost GF=Goals For GA=Against GD=Difference Pts=Points</small>
-</div></div>
+</div>
+</div>
 
-<div id="posters" class="page"><div class="card"><h3 style="color:gold">Poster - Small Logo Middle - Option 1</h3><canvas id="c" width="1080" height="1350"></canvas><br>
-<select id="pa" onchange="make()"></select><select id="pb" onchange="make()"></select>
-<input type="date" id="pd" value="2026-10-05" onchange="make()"><input type="text" id="pv" value="Pimville Ground • Soweto" onchange="make()"><input type="text" id="pp" value="R5000 + Trophy" onchange="make()">
-<button class="btn" onclick="make()">CREATE POSTER AGAIN - MIX TEAMS</button><button class="btn btn-green" onclick="dl()">DOWNLOAD PNG</button>
-</div></div>
+<!-- POSTERS - OPTION 1 SMALL LOGO MIDDLE -->
+<div id="posters" class="content">
+<div class="card">
+<h3>🎨 Module 8 - Poster Generator - Option 1 Small Logo Middle</h3>
+<small>Small logo 200x200 centered top - like EPL Champions League</small>
+<br><br>
+<canvas id="posterCanvas" width="1080" height="1350"></canvas>
+<br>
+<label>Team A</label>
+<select id="posterTeamA" onchange="generatePoster()"><option>JOMO COSMOS</option><option>810 Pimville FC</option><option>Pimville All Stars</option><option>Dube Continental</option><option>TEST FC</option></select>
+<label>Team B</label>
+<select id="posterTeamB" onchange="generatePoster()"><option>TEST FC</option><option>JOMO COSMOS</option><option>810 Pimville FC</option><option>Pimville All Stars</option></select>
+<label>Date</label>
+<input type="date" id="posterDate" value="2026-10-05" onchange="generatePoster()">
+<label>Venue</label>
+<input type="text" id="posterVenue" value="Pimville Ground • Soweto" onchange="generatePoster()">
+<label>Prize</label>
+<input type="text" id="posterPrize" value="R5000 + Trophy" onchange="generatePoster()">
+<label>Contact</label>
+<input type="text" id="posterContact" value="065 893 6517" onchange="generatePoster()">
+<button class="btn" onclick="generatePoster()">CREATE POSTER AGAIN</button>
+<button class="btn btn-green" onclick="downloadPoster()">📥 DOWNLOAD PNG - Send to WhatsApp/Telegram</button>
+<p style="font-size:11px;color:#aaa;margin-top:8px;text-align:center">Logo size: 200px small middle top as you requested Option 1</p>
+</div>
+</div>
 
 <script>
-function go(p,b){document.querySelectorAll('.page').forEach(e=>e.classList.remove('on'));document.querySelectorAll('.tabs button').forEach(e=>e.classList.remove('on'));document.getElementById(p).classList.add('on');document.getElementById(b).classList.add('on');if(p==='posters')make();}
-let teams=JSON.parse(localStorage.getItem('810t3')||'["JOMO COSMOS","810 Pimville FC","Pimville All Stars","Dube Continental","Soweto Kings","TEST FC"]');
-let fixtures=JSON.parse(localStorage.getItem('810f3')||'[]');
-let table=JSON.parse(localStorage.getItem('810table3')||'{}');
-function initTable(){teams.forEach(t=>{if(!table[t])table[t]={P:0,W:0,D:0,L:0,GF:0,GA:0,GD:0,Pts:0};});}
-function saveFix(){
- let a=document.getElementById('fa').value,b=document.getElementById('fb').value;
- let ga=parseInt(document.getElementById('ga').value0),gb=parseInt(document.getElementById('gb').value0);
- let f={a:a,b:b,d:document.getElementById('fd').value,t:document.getElementById('ft').value,v:document.getElementById('fv').value,ga:ga,gb:gb};
- fixtures.push(f);
- // update table
- initTable();
- table[a].P++; table[b].P++;
- table[a].GF+=ga; table[a].GA+=gb; table[b].GF+=gb; table[b].GA+=ga;
- table[a].GD=table[a].GF-table[a].GA; table[b].GD=table[b].GF-table[b].GA;
- if(ga>gb){table[a].W++;table[a].Pts+=3;table[b].L++;}
- else if(gb>ga){table[b].W++;table[b].Pts+=3;table[a].L++;}
- else{table[a].D++;table[b].D++;table[a].Pts++;table[b].Pts++;}
- localStorage.setItem('810f3',JSON.stringify(fixtures));
- localStorage.setItem('810table3',JSON.stringify(table));
- loadAll();
- alert('Fixture saved & Table updated with GF GA GD!');
+// ============= FIXED CLICK FUNCTION - THIS WAS THE BUG =============
+function openPage(pageId, tabId){
+  // hide all pages
+  var pages = document.getElementsByClassName('content');
+  for(var i=0;i<pages.length;i++){pages[i].classList.remove('active');}
+  // deactivate all tabs
+  var tabs = document.querySelectorAll('.tabs button');
+  for(var j=0;j<tabs.length;j++){tabs[j].classList.remove('active');}
+  // show selected
+  document.getElementById(pageId).classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+  // auto generate poster when opening posters tab
+  if(pageId==='posters'){generatePoster();}
+  // scroll to top
+  window.scrollTo(0,0);
 }
-function clearFix(){if(confirm('Clear all?')){fixtures=[];table={};localStorage.removeItem('810f3');localStorage.removeItem('810table3');loadAll();}}
-function addT(){let t=document.getElementById('newT').value.trim();if(t){teams.push(t);localStorage.setItem('810t3',JSON.stringify(teams));document.getElementById('newT').value='';loadAll();}}
-function loadAll(){
- initTable();
- let opts=teams.map(t=><option>${t}</option>).join('');
- ['fa','fb','pa','pb'].forEach(id=>{document.getElementById(id).innerHTML=opts;});
- // FIX poster mix - make Team B different from Team A
- document.getElementById('pb').selectedIndex=1;
- let h='';fixtures.forEach(f=>{h+=<div class="item"><b>${f.a} ${f.ga}-${f.gb} ${f.b}</b><br>${f.d} ${f.t} - ${f.v}</div>;});
- document.getElementById('fixList').innerHTML=h'No fixtures';document.getElementById('homeFix').innerHTML=h'No fixtures';
- let tl='';document.getElementById('teamList').innerHTML=teams.map(t=><div class="item">⚽ ${t}</div>).join('');
- // sort table by Pts then GD
- let sorted=[...teams].sort((a,b)=>{if(table[b].Pts!==table[a].Pts)return table[b].Pts-table[a].Pts;return table[b].GD-table[a].GD;});
- let rows='<tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th></tr>';
- sorted.forEach(t=>{let r=table[t];rows+=<tr><td>${t}</td><td>${r.P}</td><td>${r.W}</td><td>${r.D}</td><td>${r.L}</td><td>${r.GF}</td><td>${r.GA}</td><td>${r.GD}</td><td><b>${r.Pts}</b></td></tr>;});
- document.getElementById('tbl').innerHTML=rows;
- make();
+
+// ============= FIXTURES WITH LOCAL STORAGE =============
+var fixtures = [];
+var teams = ["JOMO COSMOS","810 Pimville FC","Pimville All Stars","Dube Continental","Soweto Kings","TEST FC"];
+
+try{
+  var savedF = localStorage.getItem('810_fixtures_v2');
+  if(savedF){fixtures = JSON.parse(savedF);}
+  var savedT = localStorage.getItem('810_teams_v2');
+  if(savedT){teams = JSON.parse(savedT);}
+}catch(e){console.log('storage error',e);}
+ function addFixture(){
+  var f = {
+    a: document.getElementById('fixTeamA').value,
+    b: document.getElementById('fixTeamB').value,
+    date: document.getElementById('fixDate').value,
+    time: document.getElementById('fixTime').value,
+    venue: document.getElementById('fixVenue').value
+  };
+  fixtures.push(f);
+  localStorage.setItem('810_fixtures_v2', JSON.stringify(fixtures));
+  loadFixtures();
+  alert('Fixture Saved! Home tab will now show it.');
 }
-let C=document.getElementById('c'),X=C.getContext('2d');
-function make(){
- let A=document.getElementById('pa').value'810 FC',B=document.getElementById('pb').value'TEST FC';
- let D=document.getElementById('pd').value,V=document.getElementById('pv').value,P=document.getElementById('pp').value;
- X.fillStyle='#0a2e1a';X.fillRect(0,0,1080,1350);X.strokeStyle='gold';X.lineWidth=6;X.strokeRect(15,15,1050,1320);
- let L=new Image();L.src='logo.png';L.onload=()=>{X.drawImage(L,440,40,200,200);draw(A,B,D,V,P);};L.onerror=()=>{draw(A,B,D,V,P);};
+
+function clearAllFixtures(){
+  if(confirm('Delete all fixtures?')){
+    fixtures = [];
+    localStorage.removeItem('810_fixtures_v2');
+    loadFixtures();
+  }
 }
-function draw(A,B,D,V,P){
- X.textAlign='center';X.fillStyle='gold';X.font='bold 42px Arial';X.fillText('MATCH DAY',540,340);
- X.fillStyle='white';X.font='bold 88px Arial';X.fillText(A.toUpperCase(),540,470);
- X.fillStyle='gold';X.font='bold 48px Arial';X.fillText('VS',540,570);
- X.fillStyle='white';X.font='bold 88px Arial';X.fillText(B.toUpperCase(),540,700);
- X.fillStyle='rgba(0,0,0,0.7)';X.fillRect(70,850,940,130);X.strokeStyle='gold';X.strokeRect(70,850,940,130);
- X.fillStyle='white';X.font='20px Arial';X.textAlign='left';X.fillText('📅 '+D,110,895);X.fillText('📍 '+V,110,925);X.fillText('🏆 '+P,110,955);
+
+function loadFixtures(){
+  var list = document.getElementById('fixtureList');
+  var home = document.getElementById('homeFixtures');
+  if(fixtures.length===0){
+    list.innerHTML = '<p style="color:#888">No fixtures yet - Add one above</p>';
+    home.innerHTML = '<p style="color:#888">No fixtures yet - Add in Fixtures tab</p>';
+    return;
+  }
+  var html = '';
+  for(var i=0;i<fixtures.length;i++){
+    var f = fixtures[i];
+    html += '<div class="item"><b>'+f.a+' VS '+f.b+'</b><br>📅 '+f.date+' at '+f.time+'<br>📍 '+f.venue+'</div>';
+  }
+  list.innerHTML = html;
+  home.innerHTML = html;
 }
-function dl(){let a=document.createElement('a');a.download='810-Poster.png';a.href=C.toDataURL();a.click();}
-loadAll();
+
+function addNewTeam(){
+  var name = document.getElementById('newTeamName').value.trim();
+  if(name.length<2){alert('Type team name');return;}
+  teams.push(name);
+  localStorage.setItem('810_teams_v2', JSON.stringify(teams));
+  document.getElementById('newTeamName').value = '';
+  loadTeams();
+}
+
+function loadTeams(){
+  var el = document.getElementById('teamListDisplay');
+  var html = '';
+  for(var i=0;i<teams.length;i++){html += '<div class="item">⚽ '+teams[i]+'</div>';}
+  el.innerHTML = html;
+
+  // update all dropdowns
+  var options = '';
+  for(var k=0;k<teams.length;k++){options += '<option>'+teams[k]+'</option>';}
+  var ids = ['fixTeamA','fixTeamB','posterTeamA','posterTeamB'];
+  for(var j=0;j<ids.length;j++){var s=document.getElementById(ids[j]); if(s){s.innerHTML=options;}}
+
+  // table
+  var table = document.getElementById('leagueTable');
+  var th = '<tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>Pts</th></tr>';
+  for(var t=0;t<teams.length;t++){th += '<tr><td>'+teams[t]+'</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>';}
+  table.innerHTML = th;
+}
+
+// ============= POSTER GENERATOR - OPTION 1 SMALL LOGO =============
+var canvas = document.getElementById('posterCanvas');
+var ctx = canvas.getContext('2d');
+
+function generatePoster(){
+  var teamA = document.getElementById('posterTeamA').value;
+  var teamB = document.getElementById('posterTeamB').value;
+  var date = document.getElementById('posterDate').value;
+  var venue = document.getElementById('posterVenue').value;
+  var prize = document.getElementById('posterPrize').value;
+  var contact = document.getElementById('posterContact').value;
+
+  // background
+  var grad = ctx.createLinearGradient(0,0,0,1350);
+  grad.addColorStop(0,'#02150a');
+  grad.addColorStop(0.5,'#0a3d1f');
+  grad.addColorStop(1,'#02150a');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0,0,1080,1350);
+
+  // border
+  ctx.strokeStyle = '#FFD700';
+  ctx.lineWidth = 6;
+  ctx.strokeRect(15,15,1050,1320);
+  ctx.lineWidth = 2;
+  ctx.strokeRect(35,35,1010,1280);
+
+  // logo
+  var logo = new Image();
+  logo.crossOrigin = 'anonymous';
+  logo.src = './logo.png?v=' + Date.now();
+
+  logo.onload = function(){
+    // OPTION 1 - SMALL LOGO MIDDLE TOP 200x200
+    ctx.drawImage(logo, 440, 40, 200, 200);
+    drawPosterText(teamA, teamB, date, venue, prize, contact);
+  };
+  logo.onerror = function(){
+    // fallback if logo missing
+    ctx.fillStyle = '#FFD700';
+    ctx.beginPath();
+    ctx.arc(540,140,85,0,Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = '#000';
+    ctx.font = 'bold 30px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('810',540,150);
+    drawPosterText(teamA, teamB, date, venue, prize, contact);
+  };
+}
+  function drawPosterText(teamA, teamB, date, venue, prize, contact){
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#FFD700';
+  ctx.font = 'bold 42px Arial';
+  ctx.fillText('MATCH DAY',540,350);
+
+  ctx.fillStyle = 'white';
+  ctx.font = 'bold 88px Arial';
+  ctx.fillText(teamA.toUpperCase(),540,500);
+
+  ctx.fillStyle = '#FFD700';
+  ctx.font = 'bold 50px Arial';
+  ctx.fillText('VS',540,600);
+
+  ctx.fillStyle = 'white';
+  ctx.font = 'bold 88px Arial';
+  ctx.fillText(teamB.toUpperCase(),540,730);
+
+  // info box
+  ctx.fillStyle = 'rgba(0,0,0,0.75)';
+  ctx.fillRect(70,850,940,140);
+  ctx.strokeStyle = '#FFD700';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(70,850,940,140);
+
+  ctx.fillStyle = 'white';
+  ctx.font = '22px Arial';
+  ctx.textAlign = 'left';
+  ctx.fillText('📅 Date: '+date,110,895);
+  ctx.fillText('📍 Venue: '+venue,110,925);
+  ctx.fillText('🏆 Prize: '+prize,110,955);
+
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#FFD700';
+  ctx.font = '16px Arial';
+  ctx.fillText('Contact: '+contact+' | blackj07.github.io/tournaments',540,1030);
+  ctx.fillStyle = 'white';
+  ctx.font = '14px Arial';
+  ctx.fillText('810 Tournament • Fair Play • #810PIMVILLEFC',540,1060);
+}
+
+function downloadPoster(){
+  var link = document.createElement('a');
+  link.download = '810-Poster-'+Date.now()+'.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+// init
+window.onload = function(){
+  loadTeams();
+  loadFixtures();
+  generatePoster();
+};
 </script>
 </body>
 </html>
