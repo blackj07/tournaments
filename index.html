@@ -3,163 +3,177 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>810 Pimville FC</title>
+<title>810 Pimville - Tournament Poster Generator</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial;background:#0a3d0a;color:white;text-align:center}
-.header{background:#001a00;padding:20px;border-bottom:3px solid gold}
-.logo{width:80px;height:80px;background:gold;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;color:black;font-weight:bold;border:3px solid white;line-height:1.1}
-.card{background:white;color:black;margin:12px;padding:16px;border-radius:12px;text-align:left}
-.btn{background:gold;color:black;padding:14px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;margin:6px 0;width:100%;font-size:16px}
-.btn-dark{background:#111;color:gold;border:1px solid gold}
-.btn-red{background:#c00;color:white}
-input,select{width:100%;padding:12px;margin:8px 0;border-radius:6px;border:1px solid #999;font-size:16px}
-.yellow-bar{background:#001a00;border:2px solid gold;margin:12px;border-radius:12px;padding:16px}
-#posterCanvas{border:3px solid gold;border-radius:12px;max-width:95%;margin:10px auto;display:none}
+body{ background:#0a0a0a; color:white; font-family:Arial; text-align:center; padding:10px; }
+input,select{ width:90%; padding:12px; margin:8px; border-radius:8px; border:none; font-size:16px; }
+button{ background:#FFD700; color:#000; padding:15px 30px; font-weight:bold; border:none; border-radius:10px; font-size:18px; cursor:pointer; margin:10px; }
+#posterCanvas{ width:90%; max-width:400px; margin-top:15px; border:2px solid #FFD700; }
+.box{ background:#111; padding:15px; border-radius:15px; max-width:500px; margin:auto; }
 </style>
 </head>
 <body>
+<div class="box">
+<h2 style="color:#FFD700">810 PIMVILLE FC - Poster Generator</h2>
+<p>Module 8 - Final</p>
 
-<div class="header">
-<div class="logo">810<br>PIMVILLE<br>FC</div>
-<h2 style="margin:10px 0 2px 0;">810 PIMVILLE FC</h2>
-<p style="margin:0;color:gold;font-size:13px;">Official Tournaments | Pimville, Soweto</p>
-</div>
+<select id="teamA">
+<option>Select Team A</option>
+<option>JOMO COSMOS</option>
+<option>810 Pimville FC</option>
+<option>Pimville All Stars</option>
+<option>Dube Continental</option>
+<option>Soweto Kings</option>
+<option>TEST FC</option>
+</select>
 
-<div class="card">
-<h3>📞 Contact</h3>
-<p>📱 WhatsApp: <a href="https://wa.me/27658936517" target="_blank">065 893 6517 - CLICK</a> | ▶️ <a href="https://youtube.com/@810Pimville" target="_blank">@810Pimville</a> | 📘 <a href="https://www.facebook.com/share/1T7apQ1ysg/" target="_blank">Facebook</a></p>
-</div>
+<select id="teamB">
+<option>Select Team B</option>
+<option>TEST FC</option>
+<option>JOMO COSMOS</option>
+<option>810 Pimville FC</option>
+<option>Pimville All Stars</option>
+<option>Dube Continental</option>
+</select>
 
-<div class="yellow-bar">
-<h3 style="color:gold;">⚽️ Tournament Registration</h3>
-<input id="regTeam" placeholder="Team Name *">
-<input id="regPhone" placeholder="Phone Number *">
-<input id="regContact" placeholder="Contact Person">
-<input id="regLocation" placeholder="Location">
-<button id="btnRegister" class="btn">✅ Register Team</button>
-<p style="color:gold;">Teams: <span id="teamCount">0</span> | <span id="lastTeam">No teams yet</span></p>
-</div>
+<input type="date" id="date" value="2026-10-05">
+<input type="text" id="venue" value="Pimville Ground • Soweto">
+<input type="text" id="prize" value="R5000 + Trophy">
+<input type="text" id="contact" value="065 893 6517">
 
-<div style="padding:12px;background:#111;border-top:3px solid gold;">
-<button id="btnLogin" class="btn">🔐 Chairman Login</button>
-<button id="btnLogout" class="btn btn-dark">Logout</button>
-<p id="loginStatus" style="color:gold;font-size:12px;"></p>
-</div>
+<button onclick="createPoster()">CREATE POSTER NOW</button>
+<button onclick="downloadPoster()" style="background:#00ff88">DOWNLOAD PNG</button>
 
-<div id="admin" style="display:none;background:#1e1e1e;margin:12px;padding:16px;border-radius:12px;border:2px solid gold;text-align:left;">
-<h3 style="color:gold;">Chairman Dashboard</h3>
-<div id="teamList" style="background:white;color:black;padding:12px;border-radius:8px;">No teams yet</div>
 <br>
-<button id="btnClearLast" class="btn btn-dark" style="width:48%;display:inline-block;">Delete Last</button>
-<button id="btnClearAll" class="btn btn-red" style="width:48%;display:inline-block;">Clear All</button>
-<button id="btnDownload" class="btn" style="width:48%;display:inline-block;">Download Excel</button>
-<button id="btnPrint" class="btn btn-dark" style="width:48%;display:inline-block;">Print</button>
-
-<hr style="border:0.5px solid #555;margin:16px 0;">
-<h3 style="color:gold;">🏆 Fixture Generator</h3>
-<button id="btnFixtures" class="btn">Generate Fixtures</button>
-<div id="fixturesOutput" style="background:white;color:black;padding:12px;border-radius:8px;margin-top:8px;">No fixtures</div>
-
-<hr style="border:0.5px solid #555;margin:16px 0;">
-<h3 style="color:gold;">🎨 Module 8 - Poster Generator</h3>
-<p style="color:#ccc;font-size:12px;">Post to Facebook & YouTube @810Pimville</p>
-<select id="posterTeamA"><option value="">Select Team A</option></select>
-<select id="posterTeamB"><option value="">Select Team B</option></select>
-<input id="posterDate" type="date">
-<input id="posterTime" type="time" value="15:00">
-<input id="posterVenue" value="Pimville Ground, Soweto">
-<button id="btnCreatePoster" class="btn" style="background:#00ff00;color:black;font-size:18px;">🔥 CREATE POSTER NOW</button>
-<canvas id="posterCanvas" width="600" height="800"></canvas>
-<button id="btnDownloadPoster" class="btn btn-dark" style="display:none;">📥 Download Poster PNG</button>
-<button id="btnShareCaption" class="btn" style="display:none;">📋 Copy Facebook Caption</button>
-
+<canvas id="posterCanvas" width="1080" height="1920"></canvas>
 </div>
-
-<p style="font-size:11px;color:#aaa;padding:20px;">© 2026 810 Pimville FC</p>
 
 <script>
-document.addEventListener('DOMContentLoaded', function(){
- var teams=[]; try{var s=localStorage.getItem("teams810"); if(s) teams=JSON.parse(s);}catch(e){teams=[];}
+const canvas = document.getElementById("posterCanvas");
+const ctx = canvas.getContext("2d");
 
- function save(){localStorage.setItem("teams810",JSON.stringify(teams));}
+function createPoster(){
+  const teamA = document.getElementById("teamA").value;
+  const teamB = document.getElementById("teamB").value;
+  const date = document.getElementById("date").value;
+  const venue = document.getElementById("venue").value;
+  const prize = document.getElementById("prize").value;
 
- function renderTeams(){
-  document.getElementById("teamCount").innerText=teams.length;
-  var last=document.getElementById("lastTeam");
-  var list=document.getElementById("teamList");
-  if(teams.length===0){last.innerText="No teams yet"; list.innerHTML="No teams yet";}
-  else{last.innerText="Last: "+teams[teams.length-1].team+" | Total: "+teams.length; var h=""; for(var i=0;i<teams.length;i++)h+=(i+1)+". "+teams[i].team+" - "+teams[i].phone+"<br>"; list.innerHTML=h;}
-  // SAFE poster dropdown refresh - separate, never crash
-  try{
-   var selA=document.getElementById("posterTeamA"); var selB=document.getElementById("posterTeamB");
-   var curA=selA.value; var curB=selB.value;
-   selA.innerHTML='<option value="">Select Team A</option>'; selB.innerHTML='<option value="">Select Team B</option>';
-   for(var i=0;i<teams.length;i++){var o1=document.createElement("option");o1.value=teams[i].team;o1.textContent=teams[i].team;selA.appendChild(o1); var o2=document.createElement("option");o2.value=teams[i].team;o2.textContent=teams[i].team;selB.appendChild(o2);}
-   if(curA) selA.value=curA; if(curB) selB.value=curB;
-   if(teams.length>=2 &&!selB.value){ selB.selectedIndex=1; }
-  }catch(e){}
-  document.getElementById("loginStatus").innerText= localStorage.getItem("isChairman")==="yes"? "✅ Chairman Logged In":"";
- }
+  // Background - ZCC dark green
+  let grad = ctx.createLinearGradient(0,0,0,1920);
+  grad.addColorStop(0, "#02150a");
+  grad.addColorStop(0.5, "#0a3d1f");
+  grad.addColorStop(1, "#02150a");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0,0,1080,1920);
 
- document.getElementById("btnRegister").addEventListener('click', function(){
-  var team=document.getElementById('regTeam').value.trim(); var phone=document.getElementById('regPhone').value.trim();
-  var contact=document.getElementById('regContact').value.trim(); var loc=document.getElementById('regLocation').value.trim();
-  if(!team){alert("Enter Team Name");return;} if(!phone){alert("Enter Phone");return;}
-  teams.push({team:team,phone:phone,contact:contact,location:loc}); save(); renderTeams();
-  alert("✅ "+team+" Registered!"); window.open("https://wa.me/27658936517?text="+encodeURIComponent("810 PIMVILLE: "+team+" - "+phone),"_blank");
-  document.getElementById('regTeam').value="";document.getElementById('regPhone').value="";document.getElementById('regContact').value="";document.getElementById('regLocation').value="";
- });
+  // Stadium lights glow
+  ctx.fillStyle = "rgba(255,215,0,0.15)";
+  for(let i=0;i<20;i++){
+    ctx.beginPath();
+    ctx.arc(Math.random()*1080, Math.random()*600, 30+Math.random()*40, 0, Math.PI*2);
+    ctx.fill();
+  }
 
- document.getElementById("btnLogin").addEventListener('click', function(){ var p=prompt("Chairman Password:"); if(p===null)return; if(p.trim()==="810Pimville2025"){document.getElementById("admin").style.display="block"; localStorage.setItem("isChairman","yes"); renderTeams(); alert("✅ Logged in!");} else alert("Wrong! 810Pimville2025"); });
- document.getElementById("btnLogout").addEventListener('click', function(){ document.getElementById("admin").style.display="none"; localStorage.removeItem("isChairman"); renderTeams(); });
+  // Yellow border double
+  ctx.strokeStyle = "#FFD700";
+  ctx.lineWidth = 4;
+  ctx.strokeRect(30,30,1020,1860);
+  ctx.lineWidth = 2;
+  ctx.strokeRect(50,50,980,1820);
 
- document.getElementById("btnClearLast").addEventListener('click', function(){ if(teams.length>0){teams.pop(); save(); renderTeams();}});
- document.getElementById("btnClearAll").addEventListener('click', function(){ if(confirm("Delete ALL?")){teams=[]; save(); renderTeams();}});
- document.getElementById("btnDownload").addEventListener('click', function(){ if(teams.length===0){alert("No teams");return;} var csv="Team,Phone,Contact,Location\n"; for(var i=0;i<teams.length;i++)csv+=teams[i].team+","+teams[i].phone+","+teams[i].contact+","+teams[i].location+"\n"; var a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"})); a.download="810_Teams.csv"; a.click(); });
- document.getElementById("btnPrint").addEventListener('click', function(){ if(teams.length===0){alert("No teams");return;} var w=window.open("","","width=800,height=600"); var h="<h2>810 Teams - "+teams.length+"</h2><ol>"; for(var i=0;i<teams.length;i++)h+="<li>"+teams[i].team+"</li>"; h+="</ol>"; w.document.write(h); w.document.close(); w.print(); });
- document.getElementById("btnFixtures").addEventListener('click', function(){ if(teams.length<2){alert("Need 2 teams");return;} var out=document.getElementById("fixturesOutput"); var sh=[...teams].sort(()=>0.5-Math.random()); var html=""; for(var i=0;i<sh.length-1;i+=2)html+="Match "+(i/2+1)+": "+sh[i].team+" vs "+sh[i+1].team+"<br>"; if(sh.length%2)html+="Match: "+sh[sh.length-1].team+" vs BYE<br>"; out.innerHTML=html; });
+  // Logo - load your real logo.png from GitHub
+  const logo = new Image();
+  logo.crossOrigin = "anonymous";
+  logo.src = "logo.png?v=" + Date.now(); // prevent cache
 
- // MODULE 8 - POSTER - SAFE
- document.getElementById("btnCreatePoster").addEventListener('click', function(){
-  var teamA=document.getElementById("posterTeamA").value; var teamB=document.getElementById("posterTeamB").value;
-  if(!teamA||!teamB){alert("Select Team A & B! Register teams first");return;}
-  var date=document.getElementById("posterDate").value || new Date().toISOString().split('T')[0];
-  var time=document.getElementById("posterTime").value || "15:00";
-  var venue=document.getElementById("posterVenue").value || "Pimville Ground";
-  var canvas=document.getElementById("posterCanvas"); var ctx=canvas.getContext("2d");
-  ctx.fillStyle="#001a00"; ctx.fillRect(0,0,600,800);
-  ctx.strokeStyle="gold"; ctx.lineWidth=8; ctx.strokeRect(0,0,600,800);
-  ctx.fillStyle="gold"; ctx.beginPath(); ctx.arc(300,80,50,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle="black"; ctx.font="bold 18px Arial"; ctx.textAlign="center"; ctx.fillText("810",300,75); ctx.fillText("PIMVILLE",300,95);
-  ctx.fillStyle="gold"; ctx.font="bold 32px Arial"; ctx.fillText("MATCH DAY",300,170);
-  ctx.fillStyle="white"; ctx.font="14px Arial"; ctx.fillText("810 PIMVILLE FC TOURNAMENT",300,192);
-  ctx.fillStyle="gold"; ctx.fillRect(40,205,520,3);
-  ctx.fillStyle="white"; ctx.font="bold 36px Arial"; ctx.fillText(teamA.toUpperCase(),300,270);
-  ctx.fillStyle="gold"; ctx.font="bold 50px Arial"; ctx.fillText("VS",300,330);
-  ctx.fillStyle="white"; ctx.font="bold 36px Arial"; ctx.fillText(teamB.toUpperCase(),300,390);
-  ctx.fillStyle="#0a3d0a"; ctx.fillRect(40,430,520,240); ctx.strokeStyle="gold"; ctx.lineWidth=2; ctx.strokeRect(40,430,520,240);
-  ctx.fillStyle="white"; ctx.font="18px Arial"; ctx.textAlign="left";
-  ctx.fillText("📅 Date: "+date,70,470); ctx.fillText("⏰ Time: "+time,70,500); ctx.fillText("📍 Venue: "+venue,70,530);
-  ctx.fillText("🏆 Prize: R5000 + Trophy",70,560); ctx.fillText("📞 065 893 6517",70,590); ctx.fillText("▶️ youtube.com/@810Pimville",70,620); ctx.fillText("📘 Facebook: 810 Pimville FC",70,650);
-  ctx.textAlign="center"; ctx.fillStyle="gold"; ctx.font="bold 18px Arial"; ctx.fillText("COME SUPPORT LOCAL FOOTBALL!",300,710);
-  ctx.fillStyle="#aaa"; ctx.font="11px Arial"; ctx.fillText("© 810 Pimville FC | blackj07.github.io/tournaments",300,740);
-  canvas.style.display="block"; document.getElementById("btnDownloadPoster").style.display="block"; document.getElementById("btnShareCaption").style.display="block";
-  canvas.scrollIntoView({behavior:"smooth"});
- });
+  logo.onload = () => {
+    // draw logo centered top
+    ctx.drawImage(logo, 240, 80, 600, 600);
 
- document.getElementById("btnDownloadPoster").addEventListener('click', function(){
-  var c=document.getElementById("posterCanvas"); var a=document.createElement("a"); a.download="810_MATCH_"+document.getElementById("posterTeamA").value+"_vs_"+document.getElementById("posterTeamB").value+".png"; a.href=c.toDataURL("image/png"); a.click(); alert("✅ Poster Downloaded! Post to Facebook!");
- });
-document.getElementById("btnShareCaption").addEventListener('click', function(){
-  var tA=document.getElementById("posterTeamA").value; var tB=document.getElementById("posterTeamB").value; var d=document.getElementById("posterDate").value; var ti=document.getElementById("posterTime").value; var v=document.getElementById("posterVenue").value;
-  var txt="🔥 MATCH DAY ALERT! 🔥\n\n⚽️ "+tA+" vs "+tB+"\n📅 "+d+" | ⏰ "+ti+"\n📍 "+v+"\n🏆 810 PIMVILLE FC TOURNAMENT\n💰 R5,000 + Trophy!\n\n📞 065 893 6517\n▶️ youtube.com/@810Pimville\n📘 fb.com/810PimvilleFC\n\n#810PimvilleFC #KasiDiski #SowetoFootball 🇿🇦⚽️";
-  navigator.clipboard.writeText(txt).then(()=>{alert("Caption copied! Paste to Facebook:\n\n"+txt); window.open("https://www.facebook.com/share/1T7apQ1ysg/","_blank");});
- });
+    // MATCH DAY
+    ctx.fillStyle = "#FFD700";
+    ctx.font = "bold 60px Arial";
+    ctx.letterSpacing = "10px";
+    ctx.textAlign = "center";
+    ctx.fillText("MATCH DAY", 540, 800);
 
- if(localStorage.getItem("isChairman")==="yes"){document.getElementById("admin").style.display="block";}
- renderTeams();
-});
+    // Team A BIG WHITE
+    ctx.fillStyle = "white";
+    ctx.font = "bold 110px Arial";
+    ctx.textAlign = "center";
+    wrapText(teamA.toUpperCase(), 540, 950, 900, 110);
+
+    // VS small yellow
+    ctx.fillStyle = "#FFD700";
+    ctx.font = "bold 60px Arial";
+    ctx.fillText("VS", 540, 1130);
+
+    // Team B BIG WHITE
+    ctx.fillStyle = "white";
+    ctx.font = "bold 110px Arial";
+    ctx.fillText(teamB.toUpperCase(), 540, 1310);
+
+    // Info box
+    ctx.fillStyle = "rgba(0,30,15,0.9)";
+    ctx.fillRect(80, 1420, 920, 160);
+    ctx.strokeStyle = "#FFD700";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(80, 1420, 920, 160);
+    ctx.fillStyle = "white";
+    ctx.font = "bold 28px Arial";
+    ctx.textAlign = "left";
+    ctx.fillText("📅 " + date, 120, 1480);
+    ctx.fillText("📍 " + venue, 120, 1520);
+    ctx.fillText("🏆 " + prize, 120, 1560);
+
+    // Footer
+    ctx.fillStyle = "#FFD700";
+    ctx.font = "24px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("810 Tournament • All teams welcome • Fair play", 540, 1670);
+    ctx.fillStyle = "white";
+    ctx.font = "20px Arial";
+    ctx.fillText("Contact: " + document.getElementById("contact").value + " • #810PIMVILLEFC", 540, 1710);
+    ctx.fillText("blackj07.github.io/tournaments", 540, 1740);
+  };
+
+  logo.onerror = () => {
+    alert("Logo not found! Make sure logo.png is in same folder on GitHub. Using placeholder for now.");
+    ctx.fillStyle = "white";
+    ctx.fillRect(240,80,600,600);
+  }
+}
+
+function wrapText(text, x, y, maxWidth, lineHeight){
+  let words = text.split(" ");
+  let line = "";
+  let lines = [];
+  for(let n=0;n<words.length;n++){
+    let testLine = line + words[n] + " ";
+    let metrics = ctx.measureText(testLine);
+    if(metrics.width > maxWidth && n>0){
+      lines.push(line);
+      line = words[n] + " ";
+    } else {
+      line = testLine;
+    }
+  }
+  lines.push(line);
+  for(let i=0;i<lines.length;i++){
+    ctx.fillText(lines[i].trim(), x, y + (i*lineHeight));
+  }
+}
+
+function downloadPoster(){
+  const link = document.createElement("a");
+  link.download = "810-Poster-" + Date.now() + ".png";
+  link.href = canvas.toDataURL();
+  link.click();
+}
+
+// auto create on load
+window.onload = createPoster;
 </script>
 </body>
 </html>
