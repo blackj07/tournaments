@@ -109,20 +109,44 @@ function showCounter(){
 }
 
 function registerTeam(){
- let team=sanitize(document.getElementById('regTeam').value);
- let phone=sanitize(document.getElementById('regPhone').value);
+ let teamEl=document.getElementById('regTeam');
+ let phoneEl=document.getElementById('regPhone');
+ let contactEl=document.getElementById('regContact');
+ let locEl=document.getElementById('regLocation');
+ 
+ let team=sanitize(teamEl.value);
+ let phone=sanitize(phoneEl.value);
+ 
  if(!team||!phone){alert("Please enter Team Name and Phone");return;}
- if(team.length < 3){alert("Team name too short");return;}
- if(phone.length < 10){alert("Phone must be 10 digits");return;}
- let contact=sanitize(document.getElementById('regContact').value);
- let loc=sanitize(document.getElementById('regLocation').value);
+ if(team.length < 3){alert("Team name must be 3+ letters");return;}
+ if(phone.length < 10){alert("Phone must be 10 digits - use 0658936517 format");return;}
+ 
+ let contact=sanitize(contactEl.value);
+ let loc=sanitize(locEl.value);
+
+ // Prevent double click
+ let btn = event.target;
+ btn.disabled = true;
+ btn.innerText = "Sending...";
+
  teams.push({team:team,phone:phone,contact:contact,location:loc});
  localStorage.setItem("teams810",JSON.stringify(teams));
  showCounter();
- let finalMsg = encodeURIComponent("*810 PIMVILLE REGISTRATION*\n\nTeam: "+team+"\nContact: "+contact+"\nPhone: "+phone+"\nLocation: "+loc);
-window.open("https://wa.me/27658936517?text="+msg,"_blank");
- document.getElementById('regTeam').value="";document.getElementById('regContact').value="";document.getElementById('regPhone').value="";document.getElementById('regLocation').value="";
- alert("✅ Secured! Total teams: "+teams.length);
+
+ // FIXED WHATSAPP - with encode
+ let rawMsg="*810 PIMVILLE REGISTRATION*\n\nTeam: "+team+"\nContact: "+contact+"\nPhone: "+phone+"\nLocation: "+loc;
+ let finalMsg = encodeURIComponent(rawMsg);
+ 
+ // Clear FIRST, then open WhatsApp
+ teamEl.value=""; contactEl.value=""; phoneEl.value=""; locEl.value="";
+ 
+ window.open("https://wa.me/27658936517?text="+finalMsg,"_blank");
+ 
+ setTimeout(function(){
+   btn.disabled = false;
+   btn.innerText = "REGISTER - Message on WhatsApp";
+   alert("✅ Team "+team+" Registered! Total: "+teams.length+"\n\nNow you can add next team - form cleared!");
+ }, 500);
 }
 
 function chairmanLogin(){
